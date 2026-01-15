@@ -1,9 +1,9 @@
-import IndexPage from '@/components/pages/IndexPage'
+import SignupPage from '@/components/pages/auth/SignupPage'
 import React from 'react'
 
 const page = () => {
   return (
-    <IndexPage />
+    <SignupPage />
   )
 }
 

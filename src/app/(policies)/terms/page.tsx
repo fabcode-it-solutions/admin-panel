@@ -1,9 +1,8 @@
-import IndexPage from '@/components/pages/IndexPage'
 import React from 'react'
 
 const page = () => {
   return (
-    <IndexPage />
+    <div>page</div>
   )
 }
 
