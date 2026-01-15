@@ -43,9 +43,10 @@ export default function VerifyEmailPage() {
       toast.success('Email verified!', {
         description: 'Your email has been verified successfully',
       });
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Invalid or expired verification link';
       toast.error('Verification failed', {
-        description: error.message || 'Invalid or expired verification link',
+        description: message,
       });
     } finally {
       setIsAutoVerifying(false);
@@ -122,12 +123,13 @@ export default function VerifyEmailPage() {
       toast.success('Email verified!', {
         description: 'Your email has been verified successfully',
       });
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Please try again';
       setError('Invalid verification code');
       setOtp(new Array(OTP_LENGTH).fill(''));
       inputRefs.current[0]?.focus();
       toast.error('Verification failed', {
-        description: error.message || 'Please try again',
+        description: message,
       });
     } finally {
       setIsLoading(false);
@@ -144,7 +146,7 @@ export default function VerifyEmailPage() {
       });
       setOtp(new Array(OTP_LENGTH).fill(''));
       inputRefs.current[0]?.focus();
-    } catch (error: any) {
+    } catch (error) {
       toast.error('Failed to resend code');
     } finally {
       setIsLoading(false);
@@ -203,7 +205,7 @@ export default function VerifyEmailPage() {
         </div>
         <Heading level="h2">Verify your email</Heading>
         <Text variant="muted">
-          We've sent a 6-digit code to
+          We&apos;ve sent a 6-digit code to
           <br />
           <span className="font-medium text-foreground">
             {user?.email || 'your email'}
@@ -217,7 +219,9 @@ export default function VerifyEmailPage() {
           {otp.map((digit, index) => (
             <input
               key={index}
-              ref={(el) => (inputRefs.current[index] = el)}
+              ref={(el) => {
+                inputRefs.current[index] = el;
+              }}
               type="text"
               inputMode="numeric"
               maxLength={1}
@@ -262,7 +266,7 @@ export default function VerifyEmailPage() {
       {/* Resend */}
       <div className="text-center">
         <Text variant="muted" size="sm">
-          Didn't receive the code?{' '}
+          Didn&apos;t receive the code?{' '}
           <button
             onClick={handleResend}
             disabled={isLoading}

@@ -4,6 +4,7 @@ import React from 'react';
 import { Home } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Container, Heading, Text } from '@/components/typography';
+import { Anchor } from '@/components/ui/Anchor';
 
 export default function NotFound() {
   return (
@@ -15,12 +16,12 @@ export default function NotFound() {
         <Heading as='h3'>
           Page Not Found
         </Heading>
-        <Text className='mt-4' align={'center'} size='sm' >
+        <Text className='my-4' align={'center'} size='sm' >
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </Text>
-         <Button leftIcon={<Home className="h-4 w-4" />}>
-              Back to Home
-            </Button>
+         <Anchor href='/dashboard' leftIcon={<Home className="h-4 w-4" />}>
+              Back to Dashboard
+            </Anchor>
       </Container>
     </div>
   );

@@ -75,7 +75,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
         {/* Footer */}
         <div className="relative z-10 text-white/70 text-sm">
-          © 2024 Admin Panel. All rights reserved.
+          © 2026 Admin Panel. All rights reserved.
         </div>
       </motion.div>
 

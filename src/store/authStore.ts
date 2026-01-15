@@ -1,96 +1,128 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { User, AuthState, LoginCredentials, SignupData } from '@/types';
-import { apiClient } from '@/lib/api';
+/**
+ * Auth Store
+ * Zustand store for authentication state management
+ * Uses the new fetch-based API client
+ */
 
-interface AuthStore extends AuthState {
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import {
+  authService,
+  User,
+  LoginCredentials,
+  SignupData,
+} from "@/services/auth.service";
+import { apiClient } from "@/lib/api-client";
+
+interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
+}
+
+interface AuthActions {
+  // Auth actions
   login: (credentials: LoginCredentials) => Promise<void>;
   signup: (data: SignupData) => Promise<void>;
   logout: () => Promise<void>;
-  verifyEmail: (token: string) => Promise<void>;
+
+  // Email verification
+  verifyEmail: (token: string, otp?: string) => Promise<void>;
+  resendVerification: (email: string) => Promise<void>;
+
+  // Password reset
   forgotPassword: (email: string) => Promise<void>;
-  resetPassword: (token: string, password: string) => Promise<void>;
+  resetPassword: (
+    token: string,
+    password: string,
+    confirmPassword: string
+  ) => Promise<void>;
+
+  // User management
   refreshUser: () => Promise<void>;
   setUser: (user: User | null) => void;
+
+  // Error handling
   setError: (error: string | null) => void;
   clearError: () => void;
+
+  // Loading state
+  setLoading: (isLoading: boolean) => void;
 }
+
+type AuthStore = AuthState & AuthActions;
 
 export const useAuthStore = create<AuthStore>()(
   persist(
     (set, get) => ({
+      // Initial state
       user: null,
       isAuthenticated: false,
       isLoading: false,
       error: null,
 
-      login: async (credentials) => {
+      // Login
+      login: async (credentials: LoginCredentials) => {
         set({ isLoading: true, error: null });
         try {
-          const response = await apiClient.post<{
-            user: User;
-            accessToken: string;
-            refreshToken: string;
-          }>('/auth/login', credentials);
-
-          const { user, accessToken, refreshToken } = response.data;
-
-          apiClient.setAccessToken(accessToken);
-          apiClient.setRefreshToken(refreshToken);
+          const response = await authService.login(credentials);
 
           set({
-            user,
+            user: response.data.user,
             isAuthenticated: true,
             isLoading: false,
             error: null,
           });
         } catch (error: any) {
           set({
-            error: error.message || 'Login failed',
+            error: error.message || "Login failed",
             isLoading: false,
+            user: null,
+            isAuthenticated: false,
           });
           throw error;
         }
       },
 
-      signup: async (data) => {
+      // Signup
+      signup: async (data: SignupData) => {
         set({ isLoading: true, error: null });
         try {
-          const response = await apiClient.post<{
-            user: User;
-            accessToken: string;
-            refreshToken: string;
-          }>('/auth/signup', data);
+          const response = await authService.signup(data);
 
-          const { user, accessToken, refreshToken } = response.data;
-
-          apiClient.setAccessToken(accessToken);
-          apiClient.setRefreshToken(refreshToken);
-
-          set({
-            user,
-            isAuthenticated: true,
-            isLoading: false,
-            error: null,
-          });
+          // If backend auto-logs in after signup
+          if (response.data.accessToken) {
+            set({
+              user: response.data.user,
+              isAuthenticated: true,
+              isLoading: false,
+              error: null,
+            });
+          } else {
+            // If email verification required
+            set({
+              isLoading: false,
+              error: null,
+            });
+          }
         } catch (error: any) {
           set({
-            error: error.message || 'Signup failed',
+            error: error.message || "Signup failed",
             isLoading: false,
           });
           throw error;
         }
       },
 
+      // Logout
       logout: async () => {
-        set({ isLoading: true });
+        set({ isLoading: true, error: null });
         try {
-          await apiClient.post('/auth/logout');
+          await authService.logout();
         } catch (error) {
-          console.error('Logout error:', error);
+          console.error("Logout error:", error);
         } finally {
-          apiClient.removeAccessToken();
-          apiClient.removeRefreshToken();
           set({
             user: null,
             isAuthenticated: false,
@@ -100,94 +132,146 @@ export const useAuthStore = create<AuthStore>()(
         }
       },
 
-      verifyEmail: async (token) => {
+      // Verify email
+      verifyEmail: async (token: string, otp?: string) => {
         set({ isLoading: true, error: null });
         try {
-          await apiClient.post('/auth/verify-email', { token });
-          const user = get().user;
-          if (user) {
-            set({
-              user: { ...user, isVerified: true },
-              isLoading: false,
-            });
-          }
+          await authService.verifyEmail({ token, otp });
+
+          // Refresh user to get updated emailVerified status
+          await get().refreshUser();
+
+          set({
+            isLoading: false,
+            error: null,
+          });
         } catch (error: any) {
           set({
-            error: error.message || 'Email verification failed',
+            error: error.message || "Email verification failed",
             isLoading: false,
           });
           throw error;
         }
       },
 
-      forgotPassword: async (email) => {
+      // Resend verification email
+      resendVerification: async (email: string) => {
         set({ isLoading: true, error: null });
         try {
-          await apiClient.post('/auth/forgot-password', { email });
-          set({ isLoading: false });
+          await authService.resendVerification(email);
+          set({
+            isLoading: false,
+            error: null,
+          });
         } catch (error: any) {
           set({
-            error: error.message || 'Failed to send reset email',
+            error: error.message || "Failed to resend verification email",
             isLoading: false,
           });
           throw error;
         }
       },
 
-      resetPassword: async (token, password) => {
+      // Forgot password
+      forgotPassword: async (email: string) => {
         set({ isLoading: true, error: null });
         try {
-          await apiClient.post('/auth/reset-password', { token, password });
-          set({ isLoading: false });
+          await authService.forgotPassword(email);
+          set({
+            isLoading: false,
+            error: null,
+          });
         } catch (error: any) {
           set({
-            error: error.message || 'Password reset failed',
+            error: error.message || "Failed to send reset email",
             isLoading: false,
           });
           throw error;
         }
       },
 
+      // Reset password
+      resetPassword: async (
+        token: string,
+        password: string,
+        confirmPassword: string
+      ) => {
+        set({ isLoading: true, error: null });
+        try {
+          await authService.resetPassword({ token, password, confirmPassword });
+          set({
+            isLoading: false,
+            error: null,
+          });
+        } catch (error: any) {
+          set({
+            error: error.message || "Password reset failed",
+            isLoading: false,
+          });
+          throw error;
+        }
+      },
+
+      // Refresh current user
       refreshUser: async () => {
         const token = apiClient.getAccessToken();
+
         if (!token) {
-          set({ isAuthenticated: false, user: null });
+          set({
+            isAuthenticated: false,
+            user: null,
+            isLoading: false,
+          });
           return;
         }
 
         set({ isLoading: true });
         try {
-          const response = await apiClient.get<{ user: User }>('/auth/me');
+          const response = await authService.getCurrentUser();
           set({
             user: response.data.user,
             isAuthenticated: true,
             isLoading: false,
+            error: null,
           });
-        } catch (error) {
-          apiClient.removeAccessToken();
-          apiClient.removeRefreshToken();
+        } catch (error: any) {
+          // Token is invalid, clear auth
+          apiClient.clearAuth();
           set({
             user: null,
             isAuthenticated: false,
             isLoading: false,
+            error: null,
           });
         }
       },
 
-      setUser: (user) => {
-        set({ user, isAuthenticated: !!user });
+      // Set user
+      setUser: (user: User | null) => {
+        set({
+          user,
+          isAuthenticated: !!user,
+        });
       },
 
-      setError: (error) => {
+      // Set error
+      setError: (error: string | null) => {
         set({ error });
       },
 
+      // Clear error
       clearError: () => {
         set({ error: null });
       },
+
+      // Set loading
+      setLoading: (isLoading: boolean) => {
+        set({ isLoading });
+      },
     }),
     {
-      name: 'auth-storage',
+      name: "auth-storage",
+      // Only persist user and isAuthenticated
       partialize: (state) => ({
         user: state.user,
         isAuthenticated: state.isAuthenticated,
@@ -198,6 +282,12 @@ export const useAuthStore = create<AuthStore>()(
 
 // Selectors for optimized component re-renders
 export const useUser = () => useAuthStore((state) => state.user);
-export const useIsAuthenticated = () => useAuthStore((state) => state.isAuthenticated);
+export const useIsAuthenticated = () =>
+  useAuthStore((state) => state.isAuthenticated);
 export const useAuthLoading = () => useAuthStore((state) => state.isLoading);
 export const useAuthError = () => useAuthStore((state) => state.error);
+
+// Computed selectors
+export const useUserRole = () => useAuthStore((state) => state.user?.role);
+export const useIsEmailVerified = () =>
+  useAuthStore((state) => state.user?.emailVerified);

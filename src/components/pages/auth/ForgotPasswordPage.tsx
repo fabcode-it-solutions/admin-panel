@@ -128,7 +128,7 @@ export default function ForgotPasswordPage() {
       {/* Header */}
       <div className="space-y-2 text-center">
         <Heading level="h2">Forgot password?</Heading>
-        <Text variant="muted">
+        <Text variant="muted" align={'center'}>
           No worries, we'll send you reset instructions
         </Text>
       </div>

@@ -81,7 +81,8 @@ const AnchorComponent = forwardRef<HTMLAnchorElement, AnchorProps>(
           ref={ref}
           href={href}
           className={cn(
-            AnchorVariants({ variant, size, fullWidth, className })
+            AnchorVariants({ variant, size, fullWidth, className }),
+                       `${animate ? 'transition-all hover:scale-95' : ''}`
           )}
           {...props}
         >

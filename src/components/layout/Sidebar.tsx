@@ -42,13 +42,13 @@ const defaultNavItems: NavItem[] = [
   },
   {
     label: 'Users',
-    href: '/users',
+    href: '/dashboard/users',
     icon: <Users className="h-5 w-5" />,
     badge: 12,
   },
   {
     label: 'Products',
-    href: '/products',
+    href: '/dashboard/products',
     icon: <ShoppingCart className="h-5 w-5" />,
     children: [
       { label: 'All Products', href: '/products', icon: <></> },
@@ -58,12 +58,12 @@ const defaultNavItems: NavItem[] = [
   },
   {
     label: 'Analytics',
-    href: '/analytics',
+    href: '/dashboard/analytics',
     icon: <BarChart3 className="h-5 w-5" />,
   },
   {
     label: 'Reports',
-    href: '/reports',
+    href: '/dashboard/reports',
     icon: <FileText className="h-5 w-5" />,
   },
   {
@@ -73,18 +73,18 @@ const defaultNavItems: NavItem[] = [
   },
   {
     label: 'Messages',
-    href: '/messages',
+    href: '/dashboard/messages',
     icon: <Mail className="h-5 w-5" />,
     badge: 3,
   },
   {
     label: 'Notifications',
-    href: '/notifications',
+    href: '/dashboard/notifications',
     icon: <Bell className="h-5 w-5" />,
   },
   {
     label: 'Settings',
-    href: '/settings',
+    href: '/dashboard/settings',
     icon: <Settings className="h-5 w-5" />,
   },
 ];

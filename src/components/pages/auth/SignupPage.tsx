@@ -107,7 +107,7 @@ export default function SignupPage() {
       {/* Header */}
       <div className="space-y-2 text-center">
         <Heading level="h2">Create an account</Heading>
-        <Text variant="muted">
+        <Text variant="muted" align={'center'}>
           Enter your information to get started
         </Text>
       </div>

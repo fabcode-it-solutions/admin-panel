@@ -201,8 +201,8 @@ function TableComponent<T extends Record<string, any>>({
                   <td className="px-4 py-3">
                     <Checkbox
                       checked={isSelected}
-                      onChange={() => handleSelectRow(rowId)}
-                      onClick={(e) => e.stopPropagation()}
+                      id=''
+                      onChange={() => handleSelectRow(rowId)}           
                     />
                   </td>
                 )}
