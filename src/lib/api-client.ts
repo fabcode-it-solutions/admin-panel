@@ -13,7 +13,7 @@
 import { API_CONFIG, REQUEST_HEADERS, AUTH_CONFIG } from '@/config/api.config';
 import { createApiError, ApiError } from './api-error';
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   data: T;
   message?: string;
   success: boolean;
@@ -67,10 +67,10 @@ class ApiClient {
   /**
    * Build request headers
    */
-  private async buildHeaders(config?: RequestConfig): Promise<HeadersInit> {
-    const headers: HeadersInit = {
+  private async buildHeaders(config?: RequestConfig): Promise<Record<string, string>> {
+    const headers: Record<string, string> = {
       ...REQUEST_HEADERS,
-      ...config?.headers,
+      ...(config?.headers as Record<string, string>),
     };
 
     // Add CSRF token
@@ -95,7 +95,7 @@ class ApiClient {
   /**
    * Core request method
    */
-  private async request<T = any>(
+  private async request<T = unknown>(
     url: string,
     config?: RequestConfig
   ): Promise<ApiResponse<T>> {
@@ -164,7 +164,7 @@ class ApiClient {
    * Handle error response
    */
   private async handleErrorResponse(response: Response, url: string, config?: RequestConfig) {
-    let errorData: any = {};
+    let errorData: { message?: string; errors?: unknown; code?: string } = {};
     
     try {
       const contentType = response.headers.get('content-type');
@@ -196,7 +196,7 @@ class ApiClient {
     const error = createApiError(
       response.status,
       errorData.message || 'Request failed',
-      errorData.errors,
+      errorData.errors as Record<string, string[]> | undefined,
       errorData.code
     );
 
@@ -307,7 +307,7 @@ class ApiClient {
   /**
    * Log request (development only)
    */
-  private logRequest(url: string, method: string, status: number, data: any) {
+  private logRequest(url: string, method: string, status: number, data: unknown) {
     if (process.env.NODE_ENV === 'development') {
       console.group(`🌐 API ${method} ${url}`);
       console.log('Status:', status);
@@ -388,11 +388,11 @@ class ApiClient {
 
   // ==================== HTTP Methods ====================
 
-  async get<T = any>(url: string, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async get<T = unknown>(url: string, config?: RequestConfig): Promise<ApiResponse<T>> {
     return this.request<T>(url, { ...config, method: 'GET' });
   }
 
-  async post<T = any>(url: string, data?: any, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async post<T = unknown>(url: string, data?: unknown, config?: RequestConfig): Promise<ApiResponse<T>> {
     return this.request<T>(url, {
       ...config,
       method: 'POST',
@@ -400,7 +400,7 @@ class ApiClient {
     });
   }
 
-  async put<T = any>(url: string, data?: any, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async put<T = unknown>(url: string, data?: unknown, config?: RequestConfig): Promise<ApiResponse<T>> {
     return this.request<T>(url, {
       ...config,
       method: 'PUT',
@@ -408,7 +408,7 @@ class ApiClient {
     });
   }
 
-  async patch<T = any>(url: string, data?: any, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async patch<T = unknown>(url: string, data?: unknown, config?: RequestConfig): Promise<ApiResponse<T>> {
     return this.request<T>(url, {
       ...config,
       method: 'PATCH',
@@ -416,13 +416,13 @@ class ApiClient {
     });
   }
 
-  async delete<T = any>(url: string, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async delete<T = unknown>(url: string, config?: RequestConfig): Promise<ApiResponse<T>> {
     return this.request<T>(url, { ...config, method: 'DELETE' });
   }
 
   // ==================== File Upload ====================
 
-  async uploadFile<T = any>(
+  async uploadFile<T = unknown>(
     url: string,
     file: File,
     onProgress?: (progress: number) => void
@@ -485,7 +485,7 @@ class ApiClient {
     });
   }
 
-  async uploadMultipleFiles<T = any>(
+  async uploadMultipleFiles<T = unknown>(
     url: string,
     files: File[],
     onProgress?: (progress: number) => void

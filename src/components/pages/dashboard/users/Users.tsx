@@ -4,8 +4,6 @@ import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   UserPlus,
-  Search,
-  Filter,
   Download,
   Trash2,
   Edit,
@@ -19,12 +17,11 @@ import {
   Shield,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Select } from '@/components/ui/Select';
 import { Table } from '@/components/ui/Table';
 import { Pagination } from '@/components/ui/Pagination';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Avatar } from '@/components/ui/Avatar';
 import { Modal } from '@/components/ui/Modal';
@@ -63,7 +60,7 @@ export default function UsersPage() {
 
   // Fetch users
   const { data: usersData, isLoading, refetch } = useQuery(
-    ['users', page, pageSize, search, roleFilter, statusFilter],
+    ['users', String(page), String(pageSize), search, roleFilter, statusFilter],
     () =>
       usersService.getUsers({
         page,
@@ -97,6 +94,7 @@ export default function UsersPage() {
   const bulkDeleteMutation = useMutation(
     async (ids: string[]) => {
       await Promise.all(ids.map((id) => usersService.deleteUser(id)));
+      return { data: null, success: true, message: 'Users deleted' };
     },
     {
       onSuccess: () => {
@@ -112,9 +110,9 @@ export default function UsersPage() {
 
   // Stats
   const stats = useMemo(() => {
-    const users = usersData?.data.data || [];
+    const users = usersData?.data?.data || [];
     return {
-      total: usersData?.data.pagination.total || 0,
+      total: usersData?.data?.pagination?.total || 0,
       active: users.filter((u: User) => u.isActive).length,
       inactive: users.filter((u: User) => !u.isActive).length,
       admins: users.filter((u: User) => u.role === 'admin').length,
@@ -129,8 +127,9 @@ export default function UsersPage() {
       width: '50px',
       cell: (_: unknown, row: User) => (
         <Checkbox
+        id=''
           checked={selectedUsers.includes(row.id)}
-          onCheckedChange={(checked) => {
+          onChange={(checked) => {
             if (checked) {
               setSelectedUsers([...selectedUsers, row.id]);
             } else {
@@ -439,9 +438,9 @@ export default function UsersPage() {
         </CardHeader>
 
         <CardContent>
-          {usersData?.data.data.length === 0 ? (
+          {usersData?.data?.data?.length === 0 ? (
             <EmptyState
-              icon={Users}
+              icon={<Users className="h-24 w-24" />}
               title="No users found"
               description="Try adjusting your filters or add a new user"
               action={
@@ -455,7 +454,7 @@ export default function UsersPage() {
             <>
               <Table
                 columns={columns}
-                data={usersData?.data.data || []}
+                data={usersData?.data?.data || []}
                 loading={isLoading}
                 striped
                 hoverable
@@ -464,8 +463,8 @@ export default function UsersPage() {
               <div className="mt-4">
                 <Pagination
                   currentPage={page}
-                  totalPages={usersData?.data.pagination.totalPages || 1}
-                  totalItems={usersData?.data.pagination.total}
+                  totalPages={usersData?.data?.pagination?.totalPages || 1}
+                  totalItems={usersData?.data?.pagination?.total}
                   pageSize={pageSize}
                   onPageChange={setPage}
                   onPageSizeChange={setPageSize}
@@ -499,7 +498,7 @@ export default function UsersPage() {
             </Button>
             <Button
               variant="destructive"
-              onClick={() => deleteMutation.mutate(selectedUser?.id)}
+              onClick={() => selectedUser?.id && deleteMutation.mutate(selectedUser.id)}
               loading={deleteMutation.isLoading}
             >
               Delete

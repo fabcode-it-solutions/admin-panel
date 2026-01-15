@@ -54,7 +54,7 @@ export default function LoginPage() {
       await login({
         email: formData.email,
         password: formData.password,
-        remember: formData.remember,
+        rememberMe: formData.remember,
       });
 
       toast.success('Login successful!', {

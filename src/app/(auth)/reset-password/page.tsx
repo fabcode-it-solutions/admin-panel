@@ -1,9 +1,11 @@
 import ResetPasswordPage from '@/components/pages/auth/ResetPasswordPage'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const page = () => {
   return (
+    <Suspense>
     <ResetPasswordPage />
+    </Suspense>
   )
 }
 

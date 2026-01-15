@@ -77,7 +77,7 @@ export default function ResetPasswordPage() {
     setIsLoading(true);
 
     try {
-      await resetPassword(token, formData.password);
+      await resetPassword(token, formData.password, formData.confirmPassword);
       setResetComplete(true);
       toast.success('Password reset successfully!', {
         description: 'You can now login with your new password',

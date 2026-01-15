@@ -227,7 +227,7 @@ export function useQuery<T = any>(
   }, [fetchData]);
 
   return {
-    data,
+    data:{data, pagination:{}},
     isLoading,
     error,
     refetch,

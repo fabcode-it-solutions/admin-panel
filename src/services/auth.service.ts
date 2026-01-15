@@ -19,6 +19,7 @@ export interface User {
   createdAt: string;
   updatedAt: string;
   emailVerified?: boolean;
+  isActive?: boolean;
 }
 
 export interface LoginCredentials {
