@@ -80,25 +80,7 @@ export default function AdvancedHomePage() {
               need to ship faster. Built with Next.js, TypeScript, and modern best practices.
             </motion.p>
 
-            <motion.div
-              variants={fadeInUp}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4"
-            >
-              <Link href="/signup">
-                <Button size="lg" className="text-lg px-8 py-6 group">
-                  Start Building Free
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 group">
-                <Play className="mr-2 h-5 w-5" />
-                Watch Demo
-              </Button>
-              <Button size="lg" variant="ghost" className="text-lg px-8 py-6">
-                <Github className="mr-2 h-5 w-5" />
-                View on GitHub
-              </Button>
-            </motion.div>
+          
 
             {/* Stats Grid */}
             <motion.div

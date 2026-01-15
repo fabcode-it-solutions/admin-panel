@@ -105,7 +105,7 @@ const SidebarComponent: React.FC<SidebarProps> = ({
   const logout = useAuthStore((state) => state.logout);
 
   const NavLink = ({ item, nested = false }: { item: NavItem; nested?: boolean }) => {
-    const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
+    const isActive = pathname === item.href;
 
     const linkContent = (
       <Link
