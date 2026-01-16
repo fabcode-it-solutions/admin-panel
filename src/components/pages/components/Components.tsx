@@ -1195,7 +1195,6 @@ toast.info("Info message!")`}
     </div>
   );
 }
-
 const PropsBlock = ({ columns, data, snippet }: TableProps) => {
   return (
     <div className="space-y-4 md:col-span-2">
