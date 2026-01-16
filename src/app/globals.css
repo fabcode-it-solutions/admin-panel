@@ -224,3 +224,8 @@ button,a{
   );
   background-size: 1000px 100%;
 }
+
+pre.shiki.github-dark {
+    padding: 24px;
+    border-radius: 20px;
+}

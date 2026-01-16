@@ -1204,7 +1204,7 @@ const PropsBlock = ({ columns, data, snippet }: TableProps) => {
           Code
         </Text>
         {snippet && (
-          <CodeBlockDemo code={snippet} language="React"></CodeBlockDemo>
+          <CodeBlockDemo code={snippet} language="ts"></CodeBlockDemo>
         )}
       </div>
       <div>
