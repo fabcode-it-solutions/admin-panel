@@ -21,6 +21,16 @@ export interface User {
   emailVerified?: boolean;
   isActive?: boolean;
 }
+export interface Report {
+  id: string;
+  reportId: string;
+  reportedBy: string;
+  reportedUser: string;
+  type: "Spam" | "Abuse" | "Fake" | "Harassment";
+  description: string;
+  status: "Pending" | "In Review" | "Resolved" | "Rejected";
+  createdAt: string;
+}
 
 export interface LoginCredentials {
   email: string;

@@ -212,12 +212,20 @@ function TableComponent<T extends Record<string, any>>({
                     : row[column.key];
 
                   return (
-                    <td
-                      key={column.key}
-                      className="px-4 py-3 text-sm text-foreground whitespace-pre-line"
-                    >
-                      {column.cell ? column.cell(value, row) : value}
-                    </td>
+                     <td
+      key={column.key}
+      className="px-4 py-3 text-sm text-foreground whitespace-pre-line"
+    >
+      {column.cell
+        ? column.cell(value, row, index) // 👈 index passed
+        : value}
+    </td>
+                    // <td
+                    //   key={column.key}
+                    //   className="px-4 py-3 text-sm text-foreground whitespace-pre-line"
+                    // >
+                    //   {column.cell ? column.cell(value, row) : value}
+                    // </td>
                   );
                 })}
               </motion.tr>
