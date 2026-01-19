@@ -91,7 +91,7 @@ export default function DashboardPage() {
           Welcome back, {user?.name || 'User'}!
         </Heading>
         <p className="text-muted-foreground">
-          Here's what's happening with your business today.
+          Here&apos;s what&apos; happening with your business today.
         </p>
       </div>
 
