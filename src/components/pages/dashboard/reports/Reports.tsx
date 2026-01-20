@@ -28,6 +28,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/DropdownMenu";
 import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui/Modal";
 
 // static data
 const mockReports: Report[] = [
@@ -87,12 +88,24 @@ const Reports = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [selectedReport, setSelectedReport] = useState<Report | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reports, setReports] = useState<Report[]>(mockReports);
 
-  const filteredReports = mockReports.filter((report) =>
+  const filteredReports = reports.filter((report) =>
     Object.values(report).some((value) =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase()),
     ),
   );
+
+  const handleStatusUpdate = (reportId: string, newStatus: "Pending" | "In Review" | "Resolved" | "Rejected") => {
+    setReports(prev => prev.map(report => 
+      report.id === reportId ? { ...report, status: newStatus } : report
+    ));
+    if (selectedReport?.id === reportId) {
+      setSelectedReport(prev => prev ? { ...prev, status: newStatus } : null);
+    }
+  };
 
   const totalItems = filteredReports.length;
   const totalPages = Math.ceil(totalItems / pageSize);
@@ -216,8 +229,8 @@ const Reports = () => {
           <DropdownMenuContent align="end">
             <DropdownMenuItem
               onClick={() => {
-                // setSelectedUser(row);
-                // router.push(`/dashboard/users/${row.id}`);
+                setSelectedReport(row);
+                setIsModalOpen(true);
               }}
             >
               <Eye className="h-4 w-4 mr-2" />
@@ -398,6 +411,94 @@ const Reports = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Report Details Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Report Details"
+        size="lg"
+      >
+        {selectedReport && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">Report ID</Text>
+                <Text className="mt-1">{selectedReport.reportId}</Text>
+              </div>
+              <div>
+                <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">Status</Text>
+                <div className="mt-1">
+                  <Badge variant={
+                    selectedReport.status === "Pending" ? "warning" :
+                    selectedReport.status === "In Review" ? "secondary" :
+                    selectedReport.status === "Resolved" ? "success" : "destructive"
+                  }>
+                    {selectedReport.status}
+                  </Badge>
+                </div>
+              </div>
+              <div>
+                <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">Reported By</Text>
+                <Text className="mt-1">{selectedReport.reportedBy}</Text>
+              </div>
+              <div>
+                <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">Reported User</Text>
+                <Text className="mt-1">{selectedReport.reportedUser}</Text>
+              </div>
+              <div>
+                <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">Report Type</Text>
+                <div className="mt-1">
+                  <Badge variant={
+                    selectedReport.type === "Spam" ? "secondary" :
+                    selectedReport.type === "Abuse" || selectedReport.type === "Harassment" ? "destructive" :
+                    selectedReport.type === "Fake" ? "outline" : "default"
+                  }>
+                    {selectedReport.type}
+                  </Badge>
+                </div>
+              </div>
+              <div>
+                <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">Created At</Text>
+                <Text className="mt-1">{selectedReport.createdAt}</Text>
+              </div>
+            </div>
+            
+            <div>
+              <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">Description</Text>
+              <Text className="mt-1">{selectedReport.description}</Text>
+            </div>
+
+            <div className="flex gap-3 pt-4 border-t">
+              {selectedReport.status === "Pending" && (
+                <Button 
+                  onClick={() => handleStatusUpdate(selectedReport.id, "In Review")}
+                  variant="outline"
+                >
+                  Mark as Review
+                </Button>
+              )}
+              
+              {selectedReport.status === "In Review" && (
+                <>
+                  <Button 
+                    onClick={() => handleStatusUpdate(selectedReport.id, "Resolved")}
+                    variant="default"
+                  >
+                    Approve
+                  </Button>
+                  <Button 
+                    onClick={() => handleStatusUpdate(selectedReport.id, "Rejected")}
+                    variant="destructive"
+                  >
+                    Reject
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

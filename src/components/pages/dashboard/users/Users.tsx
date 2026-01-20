@@ -364,10 +364,10 @@ export default function UsersPage() {
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Mail className="h-4 w-4 mr-2" />
-              Send Email
+              <UserX className="h-4 w-4 mr-2" />
+              Block User
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
+            {/* <DropdownMenuSeparator /> */}
             <DropdownMenuItem
               className="text-red-600 dark:text-red-400"
               onClick={() => {
@@ -376,7 +376,7 @@ export default function UsersPage() {
               }}
             >
               <Trash2 className="h-4 w-4 mr-2" />
-              Delete
+              Suspend User
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
