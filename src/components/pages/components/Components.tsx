@@ -11,6 +11,8 @@ import { Radio } from "@/components/ui/Radio";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { TimePicker } from "@/components/ui/TimePicker";
 import { MediaPicker, type MediaItem } from "@/components/ui/MediaPicker";
+import { TagSelect, type TagOption } from "@/components/ui/TagSelect";
+import { InfiniteLoader } from "@/components/ui/InfiniteLoader";
 import {
   Card,
   CardHeader,
@@ -104,6 +106,8 @@ import {
   flexPropsData,
   containerPropsData,
   drawerPropsData,
+  infiniteLoaderPropsData,
+  tagSelectPropsData,
 } from "./data";
 import { Column } from "@/types";
 import Divider from "@/components/ui/Divider";
@@ -129,6 +133,40 @@ export default function ComponentsShowcase() {
   const [sliderValue, setSliderValue] = useState([50]);
   const [rangeValue, setRangeValue] = useState([25, 75]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedTags, setSelectedTags] = useState<TagOption[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<TagOption[]>([]);
+
+  // Infinite Loader State
+  const [infiniteItems, setInfiniteItems] = useState<
+    { id: number; name: string }[]
+  >(
+    Array.from({ length: 20 }).map((_, i) => ({
+      id: i,
+      name: `Item ${i + 1}`,
+    })),
+  );
+  const [hasMoreInfinite, setHasMoreInfinite] = useState(true);
+  const [isInfiniteLoading, setIsInfiniteLoading] = useState(false);
+
+  const loadMoreInfiniteItems = () => {
+    if (isInfiniteLoading) return;
+    setIsInfiniteLoading(true);
+
+    // Simulate API call
+    setTimeout(() => {
+      const newItems = Array.from({ length: 10 }).map((_, i) => ({
+        id: infiniteItems.length + i,
+        name: `Item ${infiniteItems.length + i + 1}`,
+      }));
+
+      setInfiniteItems((prev) => [...prev, ...newItems]);
+
+      if (infiniteItems.length + newItems.length >= 60) {
+        setHasMoreInfinite(false);
+      }
+      setIsInfiniteLoading(false);
+    }, 1500);
+  };
 
   return (
     <div>
@@ -663,10 +701,57 @@ export default function ComponentsShowcase() {
 <MediaPicker
   onSelect={(media) => console.log(media)}
   multiple
-  title="Select Media"
+  allowedTypes={['image']}
 />`}
                       columns={buttonProps}
                       data={mediaPickerPropsData}
+                    />
+
+                    <div id="tag-select" />
+                    <Text size={"lg"} weight={"semibold"} className="mb-3">
+                      Tag Select
+                    </Text>
+                    <div className="space-y-6">
+                      <TagSelect
+                        label="Skills (Multiple)"
+                        placeholder="Select skills..."
+                        options={[
+                          { value: "react", label: "React" },
+                          { value: "vue", label: "Vue" },
+                          { value: "angular", label: "Angular" },
+                          { value: "svelte", label: "Svelte" },
+                          { value: "nextjs", label: "Next.js" },
+                        ]}
+                        selectedValues={selectedTags}
+                        onSelectionChange={setSelectedTags}
+                        selectMode="multiple"
+                      />
+
+                      <TagSelect
+                        label="Primary Category (Single)"
+                        placeholder="Select category..."
+                        options={[
+                          { value: "frontend", label: "Frontend" },
+                          { value: "backend", label: "Backend" },
+                          { value: "devops", label: "DevOps" },
+                          { value: "mobile", label: "Mobile" },
+                        ]}
+                        selectedValues={selectedCategory}
+                        onSelectionChange={setSelectedCategory}
+                        selectMode="single"
+                      />
+                    </div>
+                    <PropsBlock
+                      snippet={`import { TagSelect } from "@/components/ui/TagSelect";
+<TagSelect
+  label="Skills"
+  options={options}
+  selectedValues={selectedTags}
+  onSelectionChange={setSelectedTags}
+  selectMode="multiple"
+/>`}
+                      columns={buttonProps}
+                      data={tagSelectPropsData}
                     />
                   </div>
                 </CardContent>
@@ -1247,6 +1332,46 @@ toast.info("Info message!")`}
 />`}
                       columns={buttonProps}
                       data={paginationPropsData}
+                    />
+                    <div id="infinite-loader" />
+                    <Divider />
+                    <Text size={"lg"} weight={"semibold"} className="mb-3">
+                      Infinite Loader
+                    </Text>
+                    <div className="h-[400px] border rounded-lg overflow-auto bg-slate-50 dark:bg-slate-900/50">
+                      <InfiniteLoader
+                        items={infiniteItems}
+                        hasMore={hasMoreInfinite}
+                        isLoading={isInfiniteLoading}
+                        onLoadMore={loadMoreInfiniteItems}
+                        renderItem={(item) => (
+                          <div className="p-4 border-b last:border-b-0 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                            {item.name}
+                          </div>
+                        )}
+                        loader={
+                          <div className="p-4 text-center text-sm text-slate-500">
+                            Loading more items...
+                          </div>
+                        }
+                        endMessage={
+                          <div className="p-4 text-center text-sm text-slate-500">
+                            No more items to load
+                          </div>
+                        }
+                      />
+                    </div>
+                    <PropsBlock
+                      snippet={`import { InfiniteLoader } from "@/components/ui/InfiniteLoader";
+<InfiniteLoader
+  items={items}
+  hasMore={hasMore}
+  isLoading={isLoading}
+  onLoadMore={loadMore}
+  renderItem={(item) => <div>{item.name}</div>}
+/>`}
+                      columns={buttonProps}
+                      data={infiniteLoaderPropsData}
                     />
                   </div>
                 </CardContent>

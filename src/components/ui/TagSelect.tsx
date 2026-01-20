@@ -20,6 +20,7 @@ export interface TagSelectProps {
   required?: boolean;
   disabled?: boolean;
   className?: string;
+  type?: string;
 
   // Options and values
   options?: TagOption[];
@@ -54,6 +55,7 @@ const TagSelectComponent: React.FC<TagSelectProps> = ({
   required = false,
   disabled = false,
   className = '',
+  type,
   options = [],
   selectedValues: controlledSelectedValues,
   inputValue: controlledInputValue,
@@ -116,11 +118,16 @@ const TagSelectComponent: React.FC<TagSelectProps> = ({
   }, []);
 
   // Clear inner errors when limit issue is resolved
+  const shouldClearError = innerError && limit && selectedValues.length < limit;
+  
   useEffect(() => {
-    if (innerError && limit && selectedValues.length < limit) {
-      setInnerError(undefined);
+    if (shouldClearError) {
+      const timeoutId = setTimeout(() => {
+        setInnerError(undefined);
+      }, 0);
+      return () => clearTimeout(timeoutId);
     }
-  }, [selectedValues, limit, innerError]);
+  }, [shouldClearError]);
 
   // Handle selection
   const handleSelect = (option: TagOption) => {
@@ -470,7 +477,7 @@ export default function TagSelectDemo() {
             selectMode="multiple"
             options={tagOptions}
             placeholder="Type or paste skills..."
-            helpText="Try pasting: React, Vue, Angular"
+            helperText="Try pasting: React, Vue, Angular"
             onSelectionChange={setSelectedTags}
             selectedValues={selectedTags}
             enablePaste={true}
@@ -514,7 +521,7 @@ export default function TagSelectDemo() {
             selectMode="multiple"
             options={[]}
             placeholder="Enter or paste email addresses..."
-            helpText="Paste comma-separated emails"
+            helperText="Paste comma-separated emails"
             enablePaste={true}
             enableEnter={true}
             validatePastedValue={(val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)}
