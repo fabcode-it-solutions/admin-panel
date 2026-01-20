@@ -22,7 +22,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider defaultTheme="system">
           {children}
-          <TagSelectDemo />
           <ToastProvider />
         </ThemeProvider>
       </body>

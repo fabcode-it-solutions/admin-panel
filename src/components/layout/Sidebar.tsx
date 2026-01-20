@@ -45,18 +45,18 @@ const defaultNavItems: NavItem[] = [
     label: 'Users',
     href: '/dashboard/users',
     icon: <Users className="h-5 w-5" />,
-    badge: 12,
+    badge: 4,
   },
-  {
-    label: 'Products',
-    href: '/dashboard/products',
-    icon: <ShoppingCart className="h-5 w-5" />,
-    children: [
-      { label: 'All Products', href: '/products', icon: <></> },
-      { label: 'Categories', href: '/products/categories', icon: <></> },
-      { label: 'Inventory', href: '/products/inventory', icon: <></> },
-    ],
-  },
+  // {
+  //   label: 'Products',
+  //   href: '/dashboard/products',
+  //   icon: <ShoppingCart className="h-5 w-5" />,
+  //   children: [
+  //     { label: 'All Products', href: '/products', icon: <></> },
+  //     { label: 'Categories', href: '/products/categories', icon: <></> },
+  //     { label: 'Inventory', href: '/products/inventory', icon: <></> },
+  //   ],
+  // },
   {
     label: 'Role & Permission',
     href: '/dashboard/roles-permission',
@@ -71,6 +71,7 @@ const defaultNavItems: NavItem[] = [
     label: 'Reports',
     href: '/dashboard/reports',
     icon: <FileText className="h-5 w-5" />,
+    badge: 5,
   },
   // {
   //   label: 'Calendar',

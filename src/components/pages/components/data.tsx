@@ -2355,6 +2355,236 @@ export const sliderPropsData = [
   },
 ];
 
+export const infiniteLoaderPropsData = [
+  {
+    id: "1",
+    prop: "items",
+    required: "Yes",
+    description: "Array of items to be rendered in the list.",
+    options: "T[]",
+  },
+  {
+    id: "2",
+    prop: "hasMore",
+    required: "Yes",
+    description: "Indicates whether more items are available to load.",
+    options: "true | false",
+  },
+  {
+    id: "3",
+    prop: "isLoading",
+    required: "Yes",
+    description: "Controls loading state while fetching more items.",
+    options: "true | false",
+  },
+  {
+    id: "4",
+    prop: "onLoadMore",
+    required: "Yes",
+    description: "Callback triggered when the user reaches the scroll threshold.",
+    options: "() => void",
+  },
+  {
+    id: "5",
+    prop: "renderItem",
+    required: "Yes",
+    description: "Function used to render each item.",
+    options: "(item: T, index: number) => ReactNode",
+  },
+  {
+    id: "6",
+    prop: "loader",
+    required: "No",
+    description: "Custom loader component shown while loading more items.",
+    options: "ReactNode",
+  },
+  {
+    id: "7",
+    prop: "endMessage",
+    required: "No",
+    description: "Message displayed when no more items are available.",
+    options: "ReactNode",
+  },
+  {
+    id: "8",
+    prop: "className",
+    required: "No",
+    description: "Custom classes for the outer container.",
+    options: "Any valid CSS class string",
+  },
+  {
+    id: "9",
+    prop: "itemClassName",
+    required: "No",
+    description: "Custom classes applied to each rendered item wrapper.",
+    options: "Any valid CSS class string",
+  },
+  {
+    id: "10",
+    prop: "threshold",
+    required: "No",
+    description: "Intersection Observer threshold that triggers loading more items.",
+    options: "Number between 0 and 1\n" + "Default: 1.0",
+  },
+];
+
+export const tagSelectPropsData = [
+  {
+    id: "1",
+    prop: "name",
+    required: "No",
+    description: "Name attribute for the input (useful for forms & accessibility).",
+    options: "Any string",
+  },
+  {
+    id: "2",
+    prop: "label",
+    required: "No",
+    description: "Label displayed above the tag select input.",
+    options: "String",
+  },
+  {
+    id: "3",
+    prop: "placeholder",
+    required: "No",
+    description: "Placeholder text shown inside the input.",
+    options: "String",
+  },
+  {
+    id: "4",
+    prop: "error",
+    required: "No",
+    description: "Error message displayed below the component.",
+    options: "String",
+  },
+  {
+    id: "5",
+    prop: "helperText",
+    required: "No",
+    description: "Helper text shown when no error is present.",
+    options: "String",
+  },
+  {
+    id: "6",
+    prop: "required",
+    required: "No",
+    description: "Marks the field as required.",
+    options: "true | false",
+  },
+  {
+    id: "7",
+    prop: "disabled",
+    required: "No",
+    description: "Disables the input and all interactions.",
+    options: "true | false",
+  },
+  {
+    id: "8",
+    prop: "className",
+    required: "No",
+    description: "Additional Tailwind or custom CSS classes.",
+    options: "Any valid CSS class string",
+  },
+  // Options & Values
+  {
+    id: "9",
+    prop: "options",
+    required: "No",
+    description: "Available options that can be selected.",
+    options:
+      "Array of TagOption\n" +
+      "{ value: string; label: string; disabled?: boolean }",
+  },
+  {
+    id: "10",
+    prop: "selectedValues",
+    required: "No",
+    description: "Currently selected tag values (controlled mode).",
+    options: "TagOption[]",
+  },
+  {
+    id: "11",
+    prop: "inputValue",
+    required: "No",
+    description: "Input value (controlled mode).",
+    options: "String",
+  },
+  // Mode & Limits
+  {
+    id: "12",
+    prop: "selectMode",
+    required: "No",
+    description: "Selection mode for tags.",
+    options: "single (default)\n" + "multiple",
+  },
+  {
+    id: "13",
+    prop: "limit",
+    required: "No",
+    description: "Maximum number of tags allowed.",
+    options: "Number",
+  },
+  // Behavior Flags
+  {
+    id: "14",
+    prop: "enableEnter",
+    required: "No",
+    description: "Allows creating/selecting a tag using Enter or Tab.",
+    options: "true | false",
+  },
+  {
+    id: "15",
+    prop: "openOptions",
+    required: "No",
+    description: "Automatically opens dropdown on focus.",
+    options: "true | false",
+  },
+  {
+    id: "16",
+    prop: "enablePaste",
+    required: "No",
+    description: "Allows pasting multiple values to create tags.",
+    options: "true | false",
+  },
+  {
+    id: "17",
+    prop: "pasteSeparator",
+    required: "No",
+    description: "Separator used when pasting multiple values.",
+    options: '"," (default) or any string',
+  },
+  // Callbacks
+  {
+    id: "18",
+    prop: "onInputChange",
+    required: "No",
+    description: "Triggered when input value changes.",
+    options: "(value: string) => void",
+  },
+  {
+    id: "19",
+    prop: "onSelectionChange",
+    required: "No",
+    description: "Triggered when selected tags change.",
+    options: "(values: TagOption[]) => void",
+  },
+  {
+    id: "20",
+    prop: "validatePastedValue",
+    required: "No",
+    description: "Validates each pasted value before adding.",
+    options: "(value: string) => boolean",
+  },
+  // Add New Link
+  {
+    id: "21",
+    prop: "href",
+    required: "No",
+    description: "Optional link shown when no results are found.",
+    options: "URL string",
+  },
+];
+
 export const timePickerPropsData = [
   {
     id: "1",
@@ -2410,6 +2640,7 @@ export const COMPONENT_SECTIONS = [
       { id: "time", label: "Time picker" },
       { id: "slider", label: "Slider/Range" },
       { id: "media-picker", label: "Media Picker" },
+      { id: "tag-select", label: "Tag Select" },
     ],
   },
   {
@@ -2447,6 +2678,7 @@ export const COMPONENT_SECTIONS = [
       { id: "searchInput", label: "Search Input" },
       { id: "table", label: "Table" },
       { id: "pagination", label: "Pagination" },
+      { id: "infinite-loader", label: "Infinite Loader" },
     ],
 
    },

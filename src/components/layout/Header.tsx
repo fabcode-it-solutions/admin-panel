@@ -191,7 +191,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   ))}
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-center text-primary cursor-pointer justify-center">
+                <DropdownMenuItem  onClick={() => router.push("/dashboard/notifications")} className="text-center text-primary cursor-pointer justify-center">
                   View all notifications
                 </DropdownMenuItem>
               </DropdownMenuContent>
