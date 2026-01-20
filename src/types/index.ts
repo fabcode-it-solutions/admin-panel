@@ -51,7 +51,7 @@ export interface Column<T = any> {
   key: string;
   header: string;
   accessor?: (row: T) => any;
-  cell?: (value: any, row: T) => ReactNode;
+  cell?: (value: any, row: T, index: number) => ReactNode;
   sortable?: boolean;
   width?: string;
 }

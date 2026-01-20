@@ -9,6 +9,8 @@ import { Switch } from "@/components/ui/Switch";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Radio } from "@/components/ui/Radio";
 import { DatePicker } from "@/components/ui/DatePicker";
+import { TimePicker } from "@/components/ui/TimePicker";
+import { MediaPicker, type MediaItem } from "@/components/ui/MediaPicker";
 import {
   Card,
   CardHeader,
@@ -35,7 +37,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from "@/components/ui/DropdownMenu";
-import { Table, TableProps } from "@/components/ui/Table";
+import { Drawer } from "@/components/ui/Drawer";
 import { Pagination } from "@/components/ui/Pagination";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { Heading, Text, Container, Flex } from "@/components/typography";
@@ -77,6 +79,9 @@ import {
   checkboxPropsData,
   radioPropsData,
   datePickerPropsData,
+  timePickerPropsData,
+  sliderPropsData,
+  mediaPickerPropsData,
   badgePropsData,
   avatarPropsData,
   emptyStatePropsData,
@@ -98,21 +103,31 @@ import {
   textPropsData,
   flexPropsData,
   containerPropsData,
+  drawerPropsData,
 } from "./data";
 import { Column } from "@/types";
 import Divider from "@/components/ui/Divider";
+import { Table, TableProps } from "@/components/ui/Table";
 import PageSidebar from "./Sidebar";
 import MainHeader from "@/components/layout/MainHeader";
+import { Slider } from "@/components/ui/Slider";
 
 export default function ComponentsShowcase() {
   const { toggleTheme, resolvedTheme } = useThemeStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerDirection, setDrawerDirection] = useState<"left" | "right">(
+    "right",
+  );
   const [switchChecked, setSwitchChecked] = useState(false);
   const [checkboxChecked, setCheckboxChecked] = useState(false);
   const [radioValue, setRadioValue] = useState("option1");
   const [selectValue, setSelectValue] = useState("");
   const [searchSelectValue, setSearchSelectValue] = useState("");
   const [date, setDate] = useState<Date>();
+  const [timeValue, setTimeValue] = useState<Date>();
+  const [sliderValue, setSliderValue] = useState([50]);
+  const [rangeValue, setRangeValue] = useState([25, 75]);
   const [currentPage, setCurrentPage] = useState(1);
 
   return (
@@ -550,6 +565,109 @@ export default function ComponentsShowcase() {
                       columns={buttonProps}
                       data={datePickerPropsData}
                     />
+                    <div id="time" />
+                    <Text size={"lg"} weight={"semibold"} className="mb-3">
+                      Time Picker
+                    </Text>
+                    <TimePicker value={timeValue} onChange={setTimeValue} />
+                    <PropsBlock
+                      snippet={`import { TimePicker } from "@/components/ui/TimePicker";
+<TimePicker
+  value={timeValue}
+  onChange={setTimeValue}
+/>`}
+                      columns={buttonProps}
+                      data={timePickerPropsData}
+                    />
+
+                    <div id="slider" />
+                    <Text size={"lg"} weight={"semibold"} className="mb-3">
+                      Slider
+                    </Text>
+                    <div className="space-y-4 max-w-sm">
+                      <div>
+                        <Text size="sm" className="mb-2">
+                          Single Value: {sliderValue[0]}
+                        </Text>
+                        <Slider
+                          value={sliderValue}
+                          onValueChange={setSliderValue}
+                          max={100}
+                          step={1}
+                          showTooltip
+                        />
+                      </div>
+                      <div>
+                        <Text size="sm" className="mb-2">
+                          Range Value: {rangeValue[0]} - {rangeValue[1]}
+                        </Text>
+                        <Slider
+                          value={rangeValue}
+                          onValueChange={setRangeValue}
+                          max={100}
+                          step={1}
+                          showTooltip
+                        />
+                      </div>
+                      <div>
+                        <Text size="sm" className="mb-2">
+                          With Inputs (Range)
+                        </Text>
+                        <Slider
+                          value={rangeValue}
+                          onValueChange={setRangeValue}
+                          max={100}
+                          step={1}
+                          showTooltip
+                          showInputs
+                        />
+                      </div>
+                      <div>
+                        <Text size="sm" className="mb-2">
+                          With Input (Single)
+                        </Text>
+                        <Slider
+                          value={sliderValue}
+                          onValueChange={setSliderValue}
+                          max={100}
+                          step={1}
+                          showTooltip
+                          showInputs
+                        />
+                      </div>
+                    </div>
+                    <PropsBlock
+                      snippet={`import { Slider } from "@/components/ui/Slider";
+// Single
+<Slider value={sliderValue} onValueChange={setSliderValue} />
+// Range
+<Slider value={rangeValue} onValueChange={setRangeValue} />
+// With Inputs
+<Slider value={rangeValue} onValueChange={setRangeValue} showInputs />`}
+                      columns={buttonProps}
+                      data={sliderPropsData}
+                    />
+                    <div id="media-picker" />
+                    <Text size={"lg"} weight={"semibold"} className="mb-3">
+                      Media Picker
+                    </Text>
+                    <MediaPicker
+                      onSelect={(media: MediaItem[]) =>
+                        toast.success(`Selected ${media.length} items`)
+                      }
+                      multiple
+                      title="Select Media"
+                    />
+                    <PropsBlock
+                      snippet={`import { MediaPicker } from "@/components/ui/MediaPicker";
+<MediaPicker
+  onSelect={(media) => console.log(media)}
+  multiple
+  title="Select Media"
+/>`}
+                      columns={buttonProps}
+                      data={mediaPickerPropsData}
+                    />
                   </div>
                 </CardContent>
               </Card>
@@ -837,11 +955,74 @@ toast.info("Info message!")`}
                     </div>
                     <PropsBlock
                       snippet={`import {  Tooltip } from "@/components/ui/Tooltip";
- <Tooltip content="This is a tooltip" side="top">
+<Tooltip content="This is a tooltip" side="top">
                    Add element here
                   </Tooltip>`}
                       columns={buttonProps}
                       data={tooltipPropsData}
+                    />
+                    <div>
+                      <div id="drawer" />
+                      <Text size={"lg"} weight={"semibold"} className="mb-3">
+                        Drawer
+                      </Text>
+                      <Flex gap="sm" wrap="wrap">
+                        <Button
+                          onClick={() => {
+                            setDrawerDirection("left");
+                            setIsDrawerOpen(true);
+                          }}
+                        >
+                          Open left Drawer
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setDrawerDirection("right");
+                            setIsDrawerOpen(true);
+                          }}
+                        >
+                          Open Right Drawer
+                        </Button>
+                      </Flex>
+                      <Drawer
+                        isOpen={isDrawerOpen}
+                        onClose={() => setIsDrawerOpen(false)}
+                        title="Drawer Title"
+                        description="This is a description of the drawer."
+                        direction={drawerDirection}
+                        footer={
+                          <div className="flex justify-end gap-2">
+                            <Button
+                              variant="outline"
+                              onClick={() => setIsDrawerOpen(false)}
+                            >
+                              Cancel
+                            </Button>
+                            <Button onClick={() => setIsDrawerOpen(false)}>
+                              Confirm
+                            </Button>
+                          </div>
+                        }
+                      >
+                        <Text>
+                          This is the drawer content. You can put any content
+                          here.
+                        </Text>
+                      </Drawer>
+                    </div>
+                    <PropsBlock
+                      snippet={`import { Drawer } from "@/components/ui/Drawer";
+<Drawer
+  isOpen={isDrawerOpen}
+  onClose={() => setIsDrawerOpen(false)}
+  title="Drawer Title"
+  direction="right"
+>
+  <Text>Drawer Content</Text>
+</Drawer>`}
+                      columns={buttonProps}
+                      data={drawerPropsData}
                     />
                   </div>
                 </CardContent>

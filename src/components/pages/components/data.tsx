@@ -2213,6 +2213,179 @@ export const containerPropsData = [
   },
 ];
 
+export const drawerPropsData = [
+  {
+    id: "1",
+    prop: "isOpen",
+    required: "Yes",
+    description: "Whether the drawer is open.",
+    options: "boolean",
+  },
+  {
+    id: "2",
+    prop: "onClose",
+    required: "Yes",
+    description: "Callback when the drawer is closed.",
+    options: "() => void",
+  },
+  {
+    id: "3",
+    prop: "direction",
+    required: "No",
+    description: "Direction from which the drawer slides in.",
+    options: "'left' | 'right'",
+  },
+  {
+    id: "4",
+    prop: "title",
+    required: "No",
+    description: "Title of the drawer.",
+    options: "string",
+  },
+  {
+    id: "5",
+    prop: "size",
+    required: "No",
+    description: "Size of the drawer.",
+    options: "'sm' | 'md' | 'lg' | 'xl' | 'full'",
+  },
+];
+
+export const mediaPickerPropsData = [
+  {
+    id: "1",
+    prop: "onSelect",
+    required: "No",
+    description: "Callback fired when media is selected.",
+    options: "(media: MediaItem[]) => void",
+  },
+  {
+    id: "2",
+    prop: "multiple",
+    required: "No",
+    description: "Allows selecting multiple items.",
+    options: "true | false (default: false)",
+  },
+  {
+    id: "3",
+    prop: "allowedTypes",
+    required: "No",
+    description: "Array of allowed media types.",
+    options: "['image', 'video', 'pdf', 'other']",
+  },
+  {
+    id: "4",
+    prop: "trigger",
+    required: "No",
+    description: "Custom trigger element.",
+    options: "ReactNode",
+  },
+  {
+    id: "5",
+    prop: "initialSelected",
+    required: "No",
+    description: "Initially selected media items.",
+    options: "MediaItem[]",
+  },
+];
+
+export const sliderPropsData = [
+  {
+    id: "1",
+    prop: "value",
+    required: "Yes",
+    description: "Current value(s) of the slider.",
+    options: "number[]",
+  },
+  {
+    id: "2",
+    prop: "onValueChange",
+    required: "No",
+    description: "Callback when value changes.",
+    options: "(value: number[]) => void",
+  },
+  {
+    id: "3",
+    prop: "min",
+    required: "No",
+    description: "Minimum value.",
+    options: "number (default: 0)",
+  },
+  {
+    id: "4",
+    prop: "max",
+    required: "No",
+    description: "Maximum value.",
+    options: "number (default: 100)",
+  },
+  {
+    id: "5",
+    prop: "step",
+    required: "No",
+    description: "Step increment.",
+    options: "number (default: 1)",
+  },
+  {
+    id: "6",
+    prop: "minStepsBetweenThumbs",
+    required: "No",
+    description: "Minimum steps between thumbs in range mode.",
+    options: "number (default: 0)",
+  },
+  {
+    id: "7",
+    prop: "formatLabel",
+    required: "No",
+    description: "Function to format the tooltip label.",
+    options: "(value: number) => string",
+  },
+  {
+    id: "8",
+    prop: "showTooltip",
+    required: "No",
+    description: "Whether to show tooltip on drag.",
+    options: "boolean (default: false)",
+  },
+  {
+    id: "9",
+    prop: "showInputs",
+    required: "No",
+    description: "Whether to show input fields for values.",
+    options: "boolean (default: false)",
+  },
+];
+
+export const timePickerPropsData = [
+  {
+    id: "1",
+    prop: "value",
+    required: "No",
+    description: "Selected time.",
+    options: "Date",
+  },
+  {
+    id: "2",
+    prop: "onChange",
+    required: "No",
+    description: "Callback when time changes.",
+    options: "(date: Date) => void",
+  },
+  {
+    id: "3",
+    prop: "use12Hours",
+    required: "No",
+    description: "Use 12-hour format with AM/PM.",
+    options: "boolean (default: true)",
+  },
+  {
+    id: "4",
+    prop: "disabled",
+    required: "No",
+    description: "Disables the time picker.",
+    options: "boolean",
+  },
+];
+
 export const COMPONENT_SECTIONS = [
   { id: "buttons", label: "Buttons" },
   { id: "anchors", label: "Anchors" },
@@ -2234,6 +2407,9 @@ export const COMPONENT_SECTIONS = [
       { id: "checkbox", label: "Checkbox" },
       { id: "radio", label: "Radio Buttons" },
       { id: "date", label: "Date picker" },
+      { id: "time", label: "Time picker" },
+      { id: "slider", label: "Slider/Range" },
+      { id: "media-picker", label: "Media Picker" },
     ],
   },
   {
@@ -2255,6 +2431,7 @@ export const COMPONENT_SECTIONS = [
       { id: "toasts", label: "Toasts" },
       { id: "modal", label: "Modal" },
       { id: "tooltips", label: "Tooltips" },
+      { id: "drawer", label: "Drawer" },
     ],
   },
   { id: "accordion", label: "Accordion" },

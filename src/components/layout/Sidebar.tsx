@@ -17,6 +17,7 @@ import {
   ChevronLeft,
   ChevronRight,
   LogOut,
+  ShieldCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSidebarOpen, useUIStore } from '@/store/uiStore';
@@ -57,26 +58,31 @@ const defaultNavItems: NavItem[] = [
     ],
   },
   {
-    label: 'Analytics',
-    href: '/dashboard/analytics',
-    icon: <BarChart3 className="h-5 w-5" />,
+    label: 'Role & Permission',
+    href: '/dashboard/roles-permission',
+    icon: <ShieldCheck className="h-5 w-5" />,
   },
+  // {
+  //   label: 'Analytics',
+  //   href: '/dashboard/analytics',
+  //   icon: <BarChart3 className="h-5 w-5" />,
+  // },
   {
     label: 'Reports',
     href: '/dashboard/reports',
     icon: <FileText className="h-5 w-5" />,
   },
-  {
-    label: 'Calendar',
-    href: '/calendar',
-    icon: <Calendar className="h-5 w-5" />,
-  },
-  {
-    label: 'Messages',
-    href: '/dashboard/messages',
-    icon: <Mail className="h-5 w-5" />,
-    badge: 3,
-  },
+  // {
+  //   label: 'Calendar',
+  //   href: '/calendar',
+  //   icon: <Calendar className="h-5 w-5" />,
+  // },
+  // {
+  //   label: 'Messages',
+  //   href: '/dashboard/messages',
+  //   icon: <Mail className="h-5 w-5" />,
+  //   badge: 3,
+  // },
   {
     label: 'Notifications',
     href: '/dashboard/notifications',
