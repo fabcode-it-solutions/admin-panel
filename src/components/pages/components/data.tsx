@@ -2615,6 +2615,195 @@ export const timePickerPropsData = [
     options: "boolean",
   },
 ];
+export const ratingsPropsData = [
+  {
+    id: "1",
+    prop: "value",
+    required: "No",
+    description:
+      "The current rating value (controlled component).",
+    options: "number",
+  },
+  {
+    id: "2",
+    prop: "defaultValue",
+    required: "No",
+    description:
+      "Initial rating value for uncontrolled usage.",
+    options: "number",
+  },
+  {
+    id: "3",
+    prop: "max",
+    required: "No",
+    description:
+      "Maximum number of stars to display.",
+    options: "number (default: 5)",
+  },
+  {
+    id: "4",
+    prop: "onChange",
+    required: "No",
+    description:
+      "Callback fired when the rating value changes.",
+    options: "(value: number) => void",
+  },
+  {
+    id: "5",
+    prop: "readOnly",
+    required: "No",
+    description:
+      "Disables user interaction while still displaying the rating.",
+    options: "boolean (default: false)",
+  },
+  {
+    id: "6",
+    prop: "disabled",
+    required: "No",
+    description:
+      "Disables the rating component visually and functionally.",
+    options: "boolean (default: false)",
+  },
+  {
+    id: "7",
+    prop: "allowClear",
+    required: "No",
+    description:
+      "Allows clearing the rating by clicking the same value again.",
+    options: "boolean (default: true)",
+  },
+  {
+    id: "8",
+    prop: "size",
+    required: "No",
+    description:
+      "Controls the size of the star icons.",
+    options: `"sm" | "md" | "lg" (default: "md")`,
+  },
+  {
+    id: "9",
+    prop: "labels",
+    required: "No",
+    description:
+      "Custom tooltip labels for each star.",
+    options: "string[]",
+  },
+  {
+    id: "10",
+    prop: "emptyLabel",
+    required: "No",
+    description:
+      "Text displayed when no rating is selected.",
+    options: "string (default: \"No rating\")",
+  },
+  {
+    id: "11",
+    prop: "className",
+    required: "No",
+    description:
+      "Additional CSS classes for custom styling.",
+    options: "string",
+  },
+];
+
+
+
+export const richTextEditorPropsData = [
+  {
+    id: "1",
+    prop: "value",
+    required: "Yes",
+    description: "HTML content string.",
+    options: "string",
+  },
+  {
+    id: "2",
+    prop: "onChange",
+    required: "Yes",
+    description: "Callback when content changes.",
+    options: "(value: string) => void",
+  },
+  {
+    id: "3",
+    prop: "placeholder",
+    required: "No",
+    description: "Placeholder text when empty.",
+    options: "string",
+  },
+  {
+    id: "4",
+    prop: "label",
+    required: "No",
+    description: "Label displayed above the editor.",
+    options: "string",
+  },
+  {
+    id: "5",
+    prop: "error",
+    required: "No",
+    description: "Error message displayed below.",
+    options: "string",
+  },
+  {
+    id: "6",
+    prop: "disabled",
+    required: "No",
+    description: "Disables editing.",
+    options: "boolean",
+  },
+  {
+    id: "7",
+    prop: "className",
+    required: "No",
+    description: "Additional CSS classes for custom styling.",
+    options: "string",
+  },
+];
+
+export const stepperPropsData = [
+  {
+    id: "1",
+    prop: "steps",
+    required: "Yes",
+    description: "Array of steps to display.",
+    options: "{ title: string; description?: string }[]",
+  },
+  {
+    id: "2",
+    prop: "currentStep",
+    required: "Yes",
+    description: "The index of the current active step (0-based). Set to steps.length to show all as completed.",
+    options: "number",
+  },
+  {
+    id: "3",
+    prop: "onStepChange",
+    required: "No",
+    description: "Callback when a step is clicked.",
+    options: "(step: number) => void",
+  },
+  {
+    id: "4",
+    prop: "orientation",
+    required: "No",
+    description: "Layout orientation of the stepper.",
+    options: "horizontal (default) | vertical",
+  },
+  {
+    id: "5",
+    prop: "className",
+    required: "No",
+    description: "Additional CSS classes for custom styling.",
+    options: "string",
+  },
+  // {
+  //   id: "5",
+  //   prop: "renderStepContent",
+  //   required: "No",
+  //   description: "Whether to automatically switch to vertical on mobile.",
+  //   options: "true (default) | false",
+  // },
+];
 
 export const COMPONENT_SECTIONS = [
   { id: "buttons", label: "Buttons" },
@@ -2663,6 +2852,9 @@ export const COMPONENT_SECTIONS = [
       { id: "modal", label: "Modal" },
       { id: "tooltips", label: "Tooltips" },
       { id: "drawer", label: "Drawer" },
+      { id: "stepper", label: "Stepper" },
+      { id: "rich-text-editor", label: "Rich Text Editor" },
+      { id: "ratings", label: "Ratings" },
     ],
   },
   { id: "accordion", label: "Accordion" },

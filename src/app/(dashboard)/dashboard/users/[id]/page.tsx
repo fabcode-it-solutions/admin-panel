@@ -1,9 +1,9 @@
-import UsersPage from '@/components/pages/dashboard/users/Users'
+import UserDetails from '@/components/pages/dashboard/users/UserDetails';
 import React from 'react'
 
 const page = () => {
   return (
-   <UsersPage />
+   <UserDetails/>
   )
 }
 
