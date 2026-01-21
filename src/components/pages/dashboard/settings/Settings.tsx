@@ -78,13 +78,9 @@ const SETTINGS_SECTIONS: SettingSection[] = [
   },
 ];
 
-// --------------------
-// Settings Page
-// --------------------
 export default function SettingsPage() {
   return (
     <div className="space-y-8">
-      {/* Page Header */}
       <div>
         <Heading level="h3" className="mb-2">
           Settings
@@ -94,19 +90,12 @@ export default function SettingsPage() {
         </Text>
       </div>
 
-      {/* Settings Sections */}
       {SETTINGS_SECTIONS.map((section) => (
-        <div
-          key={section.title}
-          className="rounded-lg border p-5 space-y-4"
-        >
+        <div key={section.title} className="rounded-lg border p-5 space-y-4">
           <Heading level="h5">{section.title}</Heading>
 
           {section.items.map((item) => (
-            <Flex
-              key={item.label}
-              className="items-center justify-between"
-            >
+            <Flex key={item.label} className="items-center justify-between">
               <div>
                 <Text className="font-medium">{item.label}</Text>
                 <Text className="text-sm text-muted-foreground">
@@ -114,12 +103,12 @@ export default function SettingsPage() {
                 </Text>
               </div>
 
-              {item.value && <Text>{item.value}</Text>}
+              {item.value && (
+                <Text className="cursor-pointer">{item.value}</Text>
+              )}
 
               {item.actionLabel && (
-                <Button variant="secondary">
-                  {item.actionLabel}
-                </Button>
+                <Button variant="secondary">{item.actionLabel}</Button>
               )}
             </Flex>
           ))}

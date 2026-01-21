@@ -108,6 +108,9 @@ import {
   drawerPropsData,
   infiniteLoaderPropsData,
   tagSelectPropsData,
+  stepperPropsData,
+  richTextEditorPropsData,
+  ratingsPropsData,
 } from "./data";
 import { Column } from "@/types";
 import Divider from "@/components/ui/Divider";
@@ -115,6 +118,9 @@ import { Table, TableProps } from "@/components/ui/Table";
 import PageSidebar from "./Sidebar";
 import MainHeader from "@/components/layout/MainHeader";
 import { Slider } from "@/components/ui/Slider";
+import { Stepper } from "@/components/ui/Stepper";
+import { RichTextEditor } from "@/components/ui/RichTextEditor";
+import { Rating } from "@/components/ui/Ratings";
 
 export default function ComponentsShowcase() {
   const { toggleTheme, resolvedTheme } = useThemeStore();
@@ -135,6 +141,9 @@ export default function ComponentsShowcase() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedTags, setSelectedTags] = useState<TagOption[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<TagOption[]>([]);
+  const [activeStep, setActiveStep] = useState(0);
+  const [rating, setRating] = useState<number>(0);
+  const [richTextContent, setRichTextContent] = useState("");
 
   // Infinite Loader State
   const [infiniteItems, setInfiniteItems] = useState<
@@ -1109,6 +1118,309 @@ toast.info("Info message!")`}
                       columns={buttonProps}
                       data={drawerPropsData}
                     />
+                    <div>
+                      <div id="stepper" />
+                      <Text size={"lg"} weight={"semibold"} className="mb-3">
+                        Stepper
+                      </Text>
+                      <div className="space-y-6">
+                        <Stepper
+                          steps={[
+                            {
+                              id: 1,
+                              title: "Account",
+                              description: "Create your account",
+                            },
+                            {
+                              id: 2,
+                              title: "Profile",
+                              description: "Add profile details",
+                            },
+                            {
+                              id: 3,
+                              title: "Review",
+                              description: "Review and submit",
+                            },
+                          ]}
+                          currentStep={activeStep}
+                          onStepChange={setActiveStep}
+                          // orientation="vertical"
+                          renderStepContent={(stepIndex) => {
+                            switch (stepIndex) {
+                              case 0:
+                                return (
+                                  <div className="rounded-lg border p-4">
+                                    <Heading
+                                      as="h4"
+                                      className="mb-2 flex justify-center"
+                                    >
+                                      Account Info
+                                    </Heading>
+                                    <Text className="flex justify-center">
+                                      Account form fields go here
+                                    </Text>
+                                  </div>
+                                );
+
+                              case 1:
+                                return (
+                                  <div className="rounded-lg border p-4">
+                                    <Heading
+                                      as="h4"
+                                      className="mb-2 flex justify-center"
+                                    >
+                                      Profile Info
+                                    </Heading>
+                                    <Text className="flex justify-center">
+                                      Profile field go here
+                                    </Text>
+                                  </div>
+                                );
+
+                              case 2:
+                                return (
+                                  <div className="rounded-lg border p-4">
+                                    <Heading
+                                      as="h4"
+                                      className="mb-2 flex justify-center"
+                                    >
+                                      Review
+                                    </Heading>
+                                    <Text className="flex justify-center">
+                                      Final Review Content
+                                    </Text>
+                                  </div>
+                                );
+
+                              default:
+                                return null;
+                            }
+                          }}
+                        />
+
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            variant="outline"
+                            onClick={() =>
+                              setActiveStep((p) => Math.max(0, p - 1))
+                            }
+                            disabled={activeStep === 0}
+                          >
+                            Previous
+                          </Button>
+                          {activeStep === 3 ? (
+                            <Button onClick={() => setActiveStep(0)}>
+                              Reset
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={() =>
+                                setActiveStep((p) => Math.min(3, p + 1))
+                              }
+                            >
+                              {activeStep === 2 ? "Finish" : "Next"}
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <PropsBlock
+                      snippet={`import { Stepper } from "@/components/ui/Stepper";
+
+const [activeStep, setActiveStep] = useState(0);
+
+// Stepper Component
+<Stepper
+        steps={[
+          {
+            id: 1,
+            title: "Account",
+            description: "Create your account",
+          },
+          {
+            id: 2,
+            title: "Profile",
+            description: "Add profile details",
+          },
+          {
+            id: 3,
+            title: "Review",
+            description: "Review and submit",
+          },
+        ]}
+        currentStep={activeStep}
+        onStepChange={setActiveStep}
+        // orientation="vertical"
+        renderStepContent={(stepIndex) => {
+          switch (stepIndex) {
+            case 0:
+              return (
+                <div className="rounded-lg border p-4">
+                  <Heading as="h4" className="mb-2 flex justify-center">Account Info</Heading>
+                  <Text className="flex justify-center">
+                    Account form fields go here
+                  </Text>
+                </div>
+              );
+
+            case 1:
+              return (
+                <div className="rounded-lg border p-4">
+                   <Heading as="h4" className="mb-2 flex justify-center">Profile Info</Heading>
+                  <Text className="flex justify-center">
+                    Profile field go here
+                  </Text>
+                </div>
+              );
+
+            case 2:
+              return (
+                <div className="rounded-lg border p-4">
+                  <Heading as="h4" className="mb-2 flex justify-center">Review</Heading>
+                  <Text className="flex justify-center">
+                    Final Review Content
+                  </Text>
+                </div>
+              );
+
+            default:
+              return null;
+          }
+        }}
+      />
+
+// Navigation Buttons
+<div className="flex gap-2 mt-4">
+  <Button
+    onClick={() => setActiveStep(p => Math.max(0, p - 1))}
+    disabled={activeStep === 0}
+  >
+    Previous
+  </Button>
+  <Button
+    onClick={() => setActiveStep(p => Math.min(3, p + 1))}
+  >
+    {activeStep === 2 ? "Finish" : "Next"}
+  </Button>
+</div>`}
+                      columns={buttonProps}
+                      data={stepperPropsData}
+                    />
+                    <Divider/>
+
+                    <div>
+                      <div id="rich-text-editor" />
+                      <Text size={"lg"} weight={"semibold"} className="mb-3">
+                        Rich Text Editor
+                      </Text>
+
+                      <div className="space-y-6">
+                        <div className="rounded-lg border p-6">
+                          <RichTextEditor
+                            label="Description"
+                            value={richTextContent}
+                            onChange={setRichTextContent}
+                            placeholder="Start typing..."
+                          />
+
+                          <div className="mt-4 p-4 bg-muted/30 rounded-md">
+                            <Heading as="h6" className="mb-2">
+                              HTML Output:
+                            </Heading>
+                            <code className="text-xs text-muted-foreground break-all">
+                              {richTextContent || "Empty"}
+                            </code>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <PropsBlock
+                      snippet={`import { RichTextEditor } from "@/components/ui/RichTextEditor";
+
+const [content, setContent] = useState("");
+
+<RichTextEditor
+  label="Description"
+  value={content}
+  onChange={setContent}
+  placeholder="Start typing..."
+/>`}
+                      columns={buttonProps}
+                      data={richTextEditorPropsData}
+                    />
+                    <Divider/>
+                    <div>
+                      <div id="ratings" />
+                      <Text size={"lg"} weight={"semibold"} className="mb-3">
+                        Ratings
+                      </Text>
+
+                      <div className="space-y-6">
+                        {/* Ratings Demo */}
+                        <div className="rounded-lg border p-6 space-y-4">
+                          <Heading as="h5">Product Rating</Heading>
+
+                          <Rating
+                            value={rating}
+                            onChange={setRating}
+                            size="lg"
+                            labels={[
+                              "Poor",
+                              "Fair",
+                              "Good",
+                              "Very Good",
+                              "Excellent",
+                            ]}
+                          />
+
+                          <Text className="text-sm text-muted-foreground">
+                            Selected Rating: {rating || "No rating"}
+                          </Text>
+                        </div>
+
+                        {/* Readonly Example */}
+                        <div className="rounded-lg border p-6 space-y-2">
+                          <Heading as="h5">Readonly Rating</Heading>
+
+                          <Rating value={3} readOnly />
+                        </div>
+
+                        {/* Disabled Example */}
+                        <div className="rounded-lg border p-6 space-y-2">
+                          <Heading as="h5">Disabled Rating</Heading>
+
+                          <Rating value={3} disabled />
+                        </div>
+                      </div>
+                    </div>
+                    <PropsBlock
+                      snippet={`import { Rating } from "@/components/ui/Rating";
+
+const [rating, setRating] = useState(0);
+
+// Basic Usage
+<Rating
+  value={rating}
+  onChange={setRating}
+/>
+
+// With Labels
+<Rating
+  value={rating}
+  onChange={setRating}
+  size="lg"
+  labels={["Poor", "Fair", "Good", "Very Good", "Excellent"]}
+/>
+
+// Readonly
+<Rating value={4} readOnly />
+
+// Disabled
+<Rating value={3} disabled />
+`}
+                      columns={buttonProps}
+                      data={ratingsPropsData}
+                    />
                   </div>
                 </CardContent>
               </Card>
@@ -1338,7 +1650,7 @@ toast.info("Info message!")`}
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Infinite Loader
                     </Text>
-                    <div className="h-[400px] border rounded-lg overflow-auto bg-slate-50 dark:bg-slate-900/50">
+                    <div className="h-100 border rounded-lg overflow-auto bg-slate-50 dark:bg-slate-900/50">
                       <InfiniteLoader
                         items={infiniteItems}
                         hasMore={hasMoreInfinite}

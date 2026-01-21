@@ -370,10 +370,10 @@ export default function UsersPage() {
             {/* <DropdownMenuSeparator /> */}
             <DropdownMenuItem
               className="text-red-600 dark:text-red-400"
-              onClick={() => {
-                setSelectedUser(row);
-                setIsDeleteModalOpen(true);
-              }}
+              // onClick={() => {
+              //   setSelectedUser(row);
+              //   setIsDeleteModalOpen(true);
+              // }}
             >
               <Trash2 className="h-4 w-4 mr-2" />
               Suspend User
