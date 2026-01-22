@@ -66,7 +66,7 @@ const DatePickerComponent: React.FC<DatePickerProps> = ({
             />
 
             {/* Calendar Dropdown */}
-            <div className="absolute z-[99] mt-2 p-3 bg-popover border border-border rounded-lg shadow-lg">
+            <div className="absolute z-99 mt-2 p-3 bg-popover border border-border rounded-lg shadow-lg">
               <DayPicker
                 mode="single"
                 selected={value}
@@ -74,6 +74,7 @@ const DatePickerComponent: React.FC<DatePickerProps> = ({
                   onChange?.(date);
                   setIsOpen(false);
                 }}
+                captionLayout="dropdown"
                 disabled={[
                   ...(minDate ? [{ before: minDate }] : []),
                   ...(maxDate ? [{ after: maxDate }] : []),

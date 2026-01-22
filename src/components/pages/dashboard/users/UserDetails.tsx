@@ -33,13 +33,8 @@ export default function UserDetailsPage() {
 
   return (
     <div className="space-y-6">
-      
       <div className="flex items-center gap-3">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => router.back()}
-        >
+        <Button variant="ghost" size="icon" onClick={() => router.back()}>
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <Heading as="h3">User Details</Heading>
@@ -47,7 +42,12 @@ export default function UserDetailsPage() {
 
       <Card>
         <CardContent className="p-6 flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-          <Avatar name={user.name} src={user.avatar} size="xl" className="w-25 h-25 text-2xl"/>
+          <Avatar
+            name={user.name}
+            src={user.avatar}
+            size="xl"
+            className="w-25 h-25 text-2xl"
+          />
 
           <div className="flex-1">
             <Heading as="h4">{user.name}</Heading>
@@ -57,9 +57,7 @@ export default function UserDetailsPage() {
                 {user.role}
               </Badge>
 
-              <Badge
-                variant={user.isActive ? "success" : "destructive"}
-              >
+              <Badge variant={user.isActive ? "success" : "destructive"}>
                 {user.isActive ? "Active" : "Inactive"}
               </Badge>
             </div>
@@ -73,16 +71,16 @@ export default function UserDetailsPage() {
           {/* Quick Actions */}
           <div className="flex gap-2">
             <Button variant="outline">Edit</Button>
-            <Button variant="destructive">
-              {user.isActive ? "Suspend" : "Activate"}
-            </Button>
+            {user.isActive ? (
+              <Button variant="destructive">Suspend</Button>
+            ) : (
+              <Button variant="default">Activate</Button>
+            )}
           </div>
         </CardContent>
       </Card>
 
-      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
         <Card>
           <CardHeader>
             <Heading as="h5">Account Information</Heading>
@@ -101,7 +99,6 @@ export default function UserDetailsPage() {
           </CardContent>
         </Card>
 
-
         <Card>
           <CardHeader>
             <Heading as="h5">Status</Heading>
@@ -115,30 +112,24 @@ export default function UserDetailsPage() {
               )}
               <Text>
                 This user is currently{" "}
-                <strong>
-                  {user.isActive ? "Active" : "Inactive"}
-                </strong>
+                <strong>{user.isActive ? "Active" : "Inactive"}</strong>
               </Text>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      
       <Card>
         <CardHeader>
           <Heading as="h5">Admin Notes</Heading>
         </CardHeader>
         <CardContent>
-          <Text className="text-muted-foreground">
-            No notes added yet.
-          </Text>
+          <Text className="text-muted-foreground">No notes added yet.</Text>
         </CardContent>
       </Card>
     </div>
   );
 }
-
 
 /* Reusable Detail Row */
 function DetailRow({

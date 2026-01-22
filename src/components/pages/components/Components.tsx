@@ -762,6 +762,47 @@ export default function ComponentsShowcase() {
                       columns={buttonProps}
                       data={tagSelectPropsData}
                     />
+                    <Divider/>
+                    <div>
+                      <div id="rich-text-editor" />
+                      <Text size={"lg"} weight={"semibold"} className="mb-3">
+                        Rich Text Editor
+                      </Text>
+
+                      <div className="space-y-6">
+                        <div className="rounded-lg border p-6">
+                          <RichTextEditor
+                            label="Description"
+                            value={richTextContent}
+                            onChange={setRichTextContent}
+                            placeholder="Start typing..."
+                          />
+
+                          <div className="mt-4 p-4 bg-muted/30 rounded-md">
+                            <Heading as="h6" className="mb-2">
+                              HTML Output:
+                            </Heading>
+                            <code className="text-xs text-muted-foreground break-all">
+                              {richTextContent || "Empty"}
+                            </code>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <PropsBlock
+                      snippet={`import { RichTextEditor } from "@/components/ui/RichTextEditor";
+
+const [content, setContent] = useState("");
+
+<RichTextEditor
+  label="Description"
+  value={content}
+  onChange={setContent}
+  placeholder="Start typing..."
+/>`}
+                      columns={buttonProps}
+                      data={richTextEditorPropsData}
+                    />
                   </div>
                 </CardContent>
               </Card>
@@ -1305,48 +1346,6 @@ const [activeStep, setActiveStep] = useState(0);
 </div>`}
                       columns={buttonProps}
                       data={stepperPropsData}
-                    />
-                    <Divider/>
-
-                    <div>
-                      <div id="rich-text-editor" />
-                      <Text size={"lg"} weight={"semibold"} className="mb-3">
-                        Rich Text Editor
-                      </Text>
-
-                      <div className="space-y-6">
-                        <div className="rounded-lg border p-6">
-                          <RichTextEditor
-                            label="Description"
-                            value={richTextContent}
-                            onChange={setRichTextContent}
-                            placeholder="Start typing..."
-                          />
-
-                          <div className="mt-4 p-4 bg-muted/30 rounded-md">
-                            <Heading as="h6" className="mb-2">
-                              HTML Output:
-                            </Heading>
-                            <code className="text-xs text-muted-foreground break-all">
-                              {richTextContent || "Empty"}
-                            </code>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <PropsBlock
-                      snippet={`import { RichTextEditor } from "@/components/ui/RichTextEditor";
-
-const [content, setContent] = useState("");
-
-<RichTextEditor
-  label="Description"
-  value={content}
-  onChange={setContent}
-  placeholder="Start typing..."
-/>`}
-                      columns={buttonProps}
-                      data={richTextEditorPropsData}
                     />
                     <Divider/>
                     <div>

@@ -2830,6 +2830,7 @@ export const COMPONENT_SECTIONS = [
       { id: "slider", label: "Slider/Range" },
       { id: "media-picker", label: "Media Picker" },
       { id: "tag-select", label: "Tag Select" },
+      { id: "rich-text-editor", label: "Rich Text Editor" },
     ],
   },
   {
@@ -2853,7 +2854,6 @@ export const COMPONENT_SECTIONS = [
       { id: "tooltips", label: "Tooltips" },
       { id: "drawer", label: "Drawer" },
       { id: "stepper", label: "Stepper" },
-      { id: "rich-text-editor", label: "Rich Text Editor" },
       { id: "ratings", label: "Ratings" },
     ],
   },
