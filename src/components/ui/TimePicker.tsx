@@ -98,7 +98,7 @@ export function TimePicker({
       <Button
         variant="outline"
         className={cn(
-          "w-[180px] justify-start text-left font-normal",
+          "w-45 justify-start text-left font-normal",
           !value && "text-muted-foreground",
         )}
         onClick={() => !disabled && setIsOpen(!isOpen)}
@@ -109,7 +109,7 @@ export function TimePicker({
       </Button>
 
       {isOpen && (
-        <div className="absolute z-50 mt-2 flex h-64 w-auto min-w-[200px] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md">
+        <div className="absolute z-50 mt-2 flex h-64 w-auto min-w-50 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md">
           {/* Hours */}
           <div className="flex-1 overflow-y-auto border-r scrollbar-hide">
             <div className="p-1">

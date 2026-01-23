@@ -18,7 +18,7 @@ export default function LoginPage() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    remember: false,
+    // remember: false,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -52,9 +52,9 @@ export default function LoginPage() {
 
     try {
       await login({
-        email: formData.email,
+        loginIdentifier: formData.email,
         password: formData.password,
-        rememberMe: formData.remember,
+        // rememberMe: formData.remember,
       });
 
       toast.success('Login successful!', {
@@ -62,16 +62,17 @@ export default function LoginPage() {
       });
 
       router.push('/dashboard');
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Please check your credentials and try again';
       toast.error('Login failed', {
-        description: error.message || 'Please check your credentials and try again',
+        description: errorMessage,
       });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleChange = (field: string, value: any) => {
+  const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
@@ -84,7 +85,7 @@ export default function LoginPage() {
       {/* Header */}
       <div className="space-y-2 text-center">
         <Heading level="h2">Welcome back</Heading>
-        <Text variant="muted" className='text-center'>
+        <Text variant="muted" className="text-center">
           Enter your credentials to access your account
         </Text>
       </div>
@@ -115,14 +116,14 @@ export default function LoginPage() {
           disabled={isLoading}
         />
 
-        <div className="flex items-center justify-between">
-          <Checkbox
+        <div className="flex items-center justify-end">
+          {/* <Checkbox
             label="Remember me"
             id='login-remember-me'
             checked={formData.remember}
             onChange={(e) => handleChange('remember', e.target.checked)}
             disabled={isLoading}
-          />
+          /> */}
 
           <Link
             href="/forgot-password"
@@ -199,7 +200,7 @@ export default function LoginPage() {
       {/* Sign Up Link */}
       <div className="text-center text-sm">
         <Text variant="muted" as="span">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
         </Text>
         <Link
           href="/signup"

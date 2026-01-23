@@ -29,17 +29,28 @@ export default function UserDetailsPage() {
     createdAt: "2026-01-10T10:30:00Z",
     lastLogin: "2026-01-18T14:20:00Z",
     avatar: "",
+    phoneNumber: "9812120909",
+    dob: "22/01/2000",
+    notes: [
+      {
+        title: "Account Review",
+        message: "User account was manually reviewed and approved.",
+        createdBy: "Admin",
+        createdAt: "2026-01-15",
+      },
+      {
+        title: "Security Note",
+        message: "Multiple login attempts detected from new device.",
+        createdBy: "System",
+        createdAt: "2026-01-18",
+      },
+    ],
   };
 
   return (
     <div className="space-y-6">
-      
       <div className="flex items-center gap-3">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => router.back()}
-        >
+        <Button variant="ghost" size="icon" onClick={() => router.back()}>
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <Heading as="h3">User Details</Heading>
@@ -47,7 +58,12 @@ export default function UserDetailsPage() {
 
       <Card>
         <CardContent className="p-6 flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-          <Avatar name={user.name} src={user.avatar} size="xl" className="w-25 h-25 text-2xl"/>
+          <Avatar
+            name={user.name}
+            src={user.avatar}
+            size="xl"
+            className="w-25 h-25 text-2xl"
+          />
 
           <div className="flex-1">
             <Heading as="h4">{user.name}</Heading>
@@ -57,9 +73,7 @@ export default function UserDetailsPage() {
                 {user.role}
               </Badge>
 
-              <Badge
-                variant={user.isActive ? "success" : "destructive"}
-              >
+              <Badge variant={user.isActive ? "success" : "destructive"}>
                 {user.isActive ? "Active" : "Inactive"}
               </Badge>
             </div>
@@ -73,16 +87,16 @@ export default function UserDetailsPage() {
           {/* Quick Actions */}
           <div className="flex gap-2">
             <Button variant="outline">Edit</Button>
-            <Button variant="destructive">
-              {user.isActive ? "Suspend" : "Activate"}
-            </Button>
+            {user.isActive ? (
+              <Button variant="destructive">Suspend</Button>
+            ) : (
+              <Button variant="default">Activate</Button>
+            )}
           </div>
         </CardContent>
       </Card>
 
-      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
         <Card>
           <CardHeader>
             <Heading as="h5">Account Information</Heading>
@@ -101,44 +115,72 @@ export default function UserDetailsPage() {
           </CardContent>
         </Card>
 
-
         <Card>
           <CardHeader>
-            <Heading as="h5">Status</Heading>
+            <Heading as="h5">User Information</Heading>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-3">
-              {user.isActive ? (
-                <UserCheck className="h-5 w-5 text-green-500" />
-              ) : (
-                <UserX className="h-5 w-5 text-red-500" />
-              )}
-              <Text>
-                This user is currently{" "}
-                <strong>
-                  {user.isActive ? "Active" : "Inactive"}
-                </strong>
-              </Text>
-            </div>
+          <CardContent className="space-y-3 text-sm">
+            <DetailRow
+              label="DOB"
+              value={user.dob}
+              icon={<Calendar className="h-4 w-4" />}
+            />
+            <DetailRow label="Contact" value={user.phoneNumber} />
+            <DetailRow
+              label="Status"
+              icon={
+                user.isActive ? (
+                  <UserCheck className="h-5 w-5 text-green-500" />
+                ) : (
+                  <UserX className="h-5 w-5 text-red-500" />
+                )
+              }
+              value={
+                <>
+                  This user is currently{" "}
+                  <strong>{user.isActive ? "Active" : "Inactive"}</strong>
+                </>
+              }
+            />
           </CardContent>
         </Card>
       </div>
 
-      
       <Card>
         <CardHeader>
           <Heading as="h5">Admin Notes</Heading>
         </CardHeader>
         <CardContent>
-          <Text className="text-muted-foreground">
-            No notes added yet.
-          </Text>
+          {user.notes.length === 0 ? (
+            <Text className="text-muted-foreground">No notes added yet.</Text>
+          ) : (
+            <div className="space-y-3 text-sm">
+              {user.notes.map((note, index) => (
+                <div
+                  key={`${note.createdAt}-${index}`}
+                  className="rounded-md border p-3 bg-muted/40"
+                >
+                  <div className="flex items-center justify-between">
+                    <Text className="font-medium">{note.title}</Text>
+                    <Badge variant="outline">{note.createdBy}</Badge>
+                  </div>
+
+                  <Text className="text-muted-foreground mt-1">
+                    {note.message}
+                  </Text>
+
+                  <div className="mt-2 text-xs text-muted-foreground">
+                    {new Date(note.createdAt).toLocaleDateString()}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
   );
 }
-
 
 /* Reusable Detail Row */
 function DetailRow({
@@ -147,7 +189,7 @@ function DetailRow({
   icon,
 }: {
   label: string;
-  value: string;
+  value: React.ReactNode;
   icon?: React.ReactNode;
 }) {
   return (

@@ -4,7 +4,7 @@
  */
 
 export const API_CONFIG = {
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8008/api',
   timeout: Number(process.env.NEXT_PUBLIC_API_TIMEOUT) || 30000,
   enableLogging: process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true',
   enableMockAPI: process.env.NEXT_PUBLIC_ENABLE_MOCK_API === 'true',
