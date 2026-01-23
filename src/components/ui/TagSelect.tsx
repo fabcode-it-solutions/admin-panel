@@ -217,48 +217,61 @@ const TagSelectComponent: React.FC<TagSelectProps> = ({
   };
 
   // Keyboard navigation
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (disabled) return;
+ const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  if (disabled) return;
 
-    // Close dropdown on Escape
-    if (e.key === 'Escape') {
-      setShowDropdown(false);
-      setActiveIndex(-1);
+  if (e.key === 'Escape') {
+    setShowDropdown(false);
+    setActiveIndex(-1);
+    return;
+  }
+
+  // ENTER KEY BEHAVIOR
+  if (e.key === 'Enter') {
+    // 1️⃣ If dropdown open & options exist → select option
+    if (showDropdown && filteredOptions.length > 0) {
+      e.preventDefault();
+
+      const optionToSelect =
+        activeIndex >= 0
+          ? filteredOptions[activeIndex]
+          : filteredOptions[0]; // 👈 FIRST OPTION AUTO SELECT
+
+      handleSelect(optionToSelect);
       return;
     }
 
-    // Handle Enter/Tab for custom values
+    // 2️⃣ Else create custom tag (if enabled)
     if (enableEnter && inputValue.trim()) {
-      if (e.key === 'Enter' || e.key === 'Tab') {
-        e.preventDefault();
-        handleSelect({
-          label: inputValue.trim(),
-          value: inputValue.trim(),
-        });
-        return;
-      }
+      e.preventDefault();
+      handleSelect({
+        label: inputValue.trim(),
+        value: inputValue.trim(),
+      });
+      return;
     }
+  }
 
-    // Arrow key navigation
-    if (!showDropdown) return;
+  // Arrow navigation
+  if (!showDropdown) return;
 
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setActiveIndex((prev) => (prev < filteredOptions.length - 1 ? prev + 1 : prev));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setActiveIndex((prev) => (prev > 0 ? prev - 1 : -1));
-    } else if (e.key === 'Home') {
-      e.preventDefault();
-      setActiveIndex(0);
-    } else if (e.key === 'End') {
-      e.preventDefault();
-      setActiveIndex(filteredOptions.length - 1);
-    } else if (e.key === 'Enter' && activeIndex >= 0) {
-      e.preventDefault();
-      handleSelect(filteredOptions[activeIndex]);
-    }
-  };
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    setActiveIndex((prev) =>
+      prev < filteredOptions.length - 1 ? prev + 1 : prev
+    );
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : -1));
+  } else if (e.key === 'Home') {
+    e.preventDefault();
+    setActiveIndex(0);
+  } else if (e.key === 'End') {
+    e.preventDefault();
+    setActiveIndex(filteredOptions.length - 1);
+  }
+};
+
 
   const displayError = error || innerError;
 

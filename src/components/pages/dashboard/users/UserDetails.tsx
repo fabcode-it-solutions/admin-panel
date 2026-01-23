@@ -29,6 +29,22 @@ export default function UserDetailsPage() {
     createdAt: "2026-01-10T10:30:00Z",
     lastLogin: "2026-01-18T14:20:00Z",
     avatar: "",
+    phoneNumber: "9812120909",
+    dob: "22/01/2000",
+    notes: [
+      {
+        title: "Account Review",
+        message: "User account was manually reviewed and approved.",
+        createdBy: "Admin",
+        createdAt: "2026-01-15",
+      },
+      {
+        title: "Security Note",
+        message: "Multiple login attempts detected from new device.",
+        createdBy: "System",
+        createdAt: "2026-01-18",
+      },
+    ],
   };
 
   return (
@@ -101,20 +117,31 @@ export default function UserDetailsPage() {
 
         <Card>
           <CardHeader>
-            <Heading as="h5">Status</Heading>
+            <Heading as="h5">User Information</Heading>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-3">
-              {user.isActive ? (
-                <UserCheck className="h-5 w-5 text-green-500" />
-              ) : (
-                <UserX className="h-5 w-5 text-red-500" />
-              )}
-              <Text>
-                This user is currently{" "}
-                <strong>{user.isActive ? "Active" : "Inactive"}</strong>
-              </Text>
-            </div>
+          <CardContent className="space-y-3 text-sm">
+            <DetailRow
+              label="DOB"
+              value={user.dob}
+              icon={<Calendar className="h-4 w-4" />}
+            />
+            <DetailRow label="Contact" value={user.phoneNumber} />
+            <DetailRow
+              label="Status"
+              icon={
+                user.isActive ? (
+                  <UserCheck className="h-5 w-5 text-green-500" />
+                ) : (
+                  <UserX className="h-5 w-5 text-red-500" />
+                )
+              }
+              value={
+                <>
+                  This user is currently{" "}
+                  <strong>{user.isActive ? "Active" : "Inactive"}</strong>
+                </>
+              }
+            />
           </CardContent>
         </Card>
       </div>
@@ -124,7 +151,31 @@ export default function UserDetailsPage() {
           <Heading as="h5">Admin Notes</Heading>
         </CardHeader>
         <CardContent>
-          <Text className="text-muted-foreground">No notes added yet.</Text>
+          {user.notes.length === 0 ? (
+            <Text className="text-muted-foreground">No notes added yet.</Text>
+          ) : (
+            <div className="space-y-3 text-sm">
+              {user.notes.map((note, index) => (
+                <div
+                  key={`${note.createdAt}-${index}`}
+                  className="rounded-md border p-3 bg-muted/40"
+                >
+                  <div className="flex items-center justify-between">
+                    <Text className="font-medium">{note.title}</Text>
+                    <Badge variant="outline">{note.createdBy}</Badge>
+                  </div>
+
+                  <Text className="text-muted-foreground mt-1">
+                    {note.message}
+                  </Text>
+
+                  <div className="mt-2 text-xs text-muted-foreground">
+                    {new Date(note.createdAt).toLocaleDateString()}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
@@ -138,7 +189,7 @@ function DetailRow({
   icon,
 }: {
   label: string;
-  value: string;
+  value: React.ReactNode;
   icon?: React.ReactNode;
 }) {
   return (

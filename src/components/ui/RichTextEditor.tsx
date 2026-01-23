@@ -16,7 +16,7 @@ import {
   AlignRight,
   RotateCcw,
   RotateCw,
-  RemoveFormatting,
+  // RemoveFormatting,
   type LucideIcon,
 } from "lucide-react";
 
@@ -217,7 +217,7 @@ export function RichTextEditor({
           ref={editorRef}
           contentEditable={!disabled}
           className={cn(
-            "min-h-[150px] max-h-[500px] overflow-y-auto p-4 outline-none prose prose-sm max-w-none dark:prose-invert",
+            "min-h-37.5 max-h-125 overflow-y-auto p-4 outline-none prose prose-sm max-w-none dark:prose-invert",
             "empty:before:content-[attr(data-placeholder)] empty:before:text-muted-foreground empty:before:pointer-events-none"
           )}
           data-placeholder={placeholder}

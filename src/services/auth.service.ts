@@ -33,7 +33,7 @@ export interface Report {
 }
 
 export interface LoginCredentials {
-  email: string;
+  loginIdentifier: string;
   password: string;
   rememberMe?: boolean;
 }
