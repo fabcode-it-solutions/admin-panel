@@ -20,7 +20,7 @@ const PageSidebar = () => {
       {
         rootMargin: "-20% 0px -70% 0px",
         threshold: 0.1,
-      }
+      },
     );
 
     COMPONENT_SECTIONS.forEach(({ id }) => {
@@ -54,7 +54,7 @@ const PageSidebar = () => {
                   "block w-full rounded-md px-3 py-2 text-left text-sm transition-all duration-300",
                   isActive
                     ? "bg-accent text-foreground font-medium"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
                 )}
               >
                 {item.label}
@@ -76,7 +76,7 @@ const PageSidebar = () => {
                         "block w-full rounded-md px-3 py-2 text-left text-sm transition",
                         isChildActive
                           ? "bg-accent text-foreground font-medium"
-                          : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                          : "text-muted-foreground hover:bg-accent hover:text-foreground",
                       )}
                     >
                       {child.label}

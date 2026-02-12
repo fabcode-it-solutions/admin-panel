@@ -567,6 +567,13 @@ export const textareaPropsData = [
     description: "Specifies the visible number of text lines.",
     options: "Any number value\n" + "Defaults to browser behavior",
   },
+  {
+    id: "14",
+    prop: "minLength",
+    required: "No",
+    description: "Sets the minimum number of characters required.",
+    options: "Any positive number\n",
+  },
 ];
 export const selectPropsData = [
   {
@@ -2381,7 +2388,8 @@ export const infiniteLoaderPropsData = [
     id: "4",
     prop: "onLoadMore",
     required: "Yes",
-    description: "Callback triggered when the user reaches the scroll threshold.",
+    description:
+      "Callback triggered when the user reaches the scroll threshold.",
     options: "() => void",
   },
   {
@@ -2423,7 +2431,8 @@ export const infiniteLoaderPropsData = [
     id: "10",
     prop: "threshold",
     required: "No",
-    description: "Intersection Observer threshold that triggers loading more items.",
+    description:
+      "Intersection Observer threshold that triggers loading more items.",
     options: "Number between 0 and 1\n" + "Default: 1.0",
   },
 ];
@@ -2433,7 +2442,8 @@ export const tagSelectPropsData = [
     id: "1",
     prop: "name",
     required: "No",
-    description: "Name attribute for the input (useful for forms & accessibility).",
+    description:
+      "Name attribute for the input (useful for forms & accessibility).",
     options: "Any string",
   },
   {
@@ -2620,93 +2630,80 @@ export const ratingsPropsData = [
     id: "1",
     prop: "value",
     required: "No",
-    description:
-      "The current rating value (controlled component).",
+    description: "The current rating value (controlled component).",
     options: "number",
   },
   {
     id: "2",
     prop: "defaultValue",
     required: "No",
-    description:
-      "Initial rating value for uncontrolled usage.",
+    description: "Initial rating value for uncontrolled usage.",
     options: "number",
   },
   {
     id: "3",
     prop: "max",
     required: "No",
-    description:
-      "Maximum number of stars to display.",
+    description: "Maximum number of stars to display.",
     options: "number (default: 5)",
   },
   {
     id: "4",
     prop: "onChange",
     required: "No",
-    description:
-      "Callback fired when the rating value changes.",
+    description: "Callback fired when the rating value changes.",
     options: "(value: number) => void",
   },
   {
     id: "5",
     prop: "readOnly",
     required: "No",
-    description:
-      "Disables user interaction while still displaying the rating.",
+    description: "Disables user interaction while still displaying the rating.",
     options: "boolean (default: false)",
   },
   {
     id: "6",
     prop: "disabled",
     required: "No",
-    description:
-      "Disables the rating component visually and functionally.",
+    description: "Disables the rating component visually and functionally.",
     options: "boolean (default: false)",
   },
   {
     id: "7",
     prop: "allowClear",
     required: "No",
-    description:
-      "Allows clearing the rating by clicking the same value again.",
+    description: "Allows clearing the rating by clicking the same value again.",
     options: "boolean (default: true)",
   },
   {
     id: "8",
     prop: "size",
     required: "No",
-    description:
-      "Controls the size of the star icons.",
+    description: "Controls the size of the star icons.",
     options: `"sm" | "md" | "lg" (default: "md")`,
   },
   {
     id: "9",
     prop: "labels",
     required: "No",
-    description:
-      "Custom tooltip labels for each star.",
+    description: "Custom tooltip labels for each star.",
     options: "string[]",
   },
   {
     id: "10",
     prop: "emptyLabel",
     required: "No",
-    description:
-      "Text displayed when no rating is selected.",
-    options: "string (default: \"No rating\")",
+    description: "Text displayed when no rating is selected.",
+    options: 'string (default: "No rating")',
   },
   {
     id: "11",
     prop: "className",
     required: "No",
-    description:
-      "Additional CSS classes for custom styling.",
+    description: "Additional CSS classes for custom styling.",
     options: "string",
   },
 ];
-
-
 
 export const richTextEditorPropsData = [
   {
@@ -2772,7 +2769,8 @@ export const stepperPropsData = [
     id: "2",
     prop: "currentStep",
     required: "Yes",
-    description: "The index of the current active step (0-based). Set to steps.length to show all as completed.",
+    description:
+      "The index of the current active step (0-based). Set to steps.length to show all as completed.",
     options: "number",
   },
   {
@@ -2858,28 +2856,33 @@ export const COMPONENT_SECTIONS = [
     ],
   },
   { id: "accordion", label: "Accordion" },
-  { id: "navigation", label: "Navigation Components",
-        children: [
+  {
+    id: "navigation",
+    label: "Navigation Components",
+    children: [
       { id: "tabs", label: "Tabs" },
       { id: "breadcrumbs", label: "Breadcrumbs" },
       { id: "dropdown", label: "Dropdown Menu" },
     ],
-   },
-  { id: "data", label: "Data Components",
-      children: [
+  },
+  {
+    id: "data",
+    label: "Data Components",
+    children: [
       { id: "searchInput", label: "Search Input" },
       { id: "table", label: "Table" },
       { id: "pagination", label: "Pagination" },
       { id: "infinite-loader", label: "Infinite Loader" },
     ],
-
-   },
-  { id: "typography", label: "Typography / Layout",
-         children: [
+  },
+  {
+    id: "typography",
+    label: "Typography / Layout",
+    children: [
       { id: "heading", label: "Heading" },
       { id: "textVariants", label: "Text Variants" },
       { id: "flex", label: "Flex Layout" },
       { id: "container", label: "Container" },
     ],
-   },
+  },
 ];

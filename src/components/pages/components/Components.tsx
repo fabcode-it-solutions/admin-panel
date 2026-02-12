@@ -211,7 +211,7 @@ export default function ComponentsShowcase() {
 
             <div className="space-y-5 w-full pl-4">
               {/* Buttons Section */}
-              <Card id="buttons">
+              <Card id="buttons" className="scroll-offset">
                 <CardHeader>
                   <CardTitle>Form Buttons</CardTitle>
                   <CardDescription>
@@ -290,7 +290,7 @@ export default function ComponentsShowcase() {
                 </CardContent>
               </Card>
               {/* Anchors Section */}
-              <Card id="anchors">
+              <Card id="anchors" className="scroll-offset">
                 <CardHeader>
                   <CardTitle>Anchors (Link) (a tag)</CardTitle>
                   <CardDescription>
@@ -399,8 +399,8 @@ export default function ComponentsShowcase() {
                 </CardContent>
               </Card>
               {/* Input Components */}
-              <Card id="inputs">
-                <CardHeader id="input">
+              <Card id="inputs" className="scroll-offset">
+                <CardHeader id="input" className="scroll-offset">
                   <CardTitle>Input Components</CardTitle>
                   <CardDescription>
                     Text inputs, textareas, and password fields
@@ -437,7 +437,10 @@ export default function ComponentsShowcase() {
                       data={inputPropsData}
                     />
 
-                    <div className="md:col-span-2 space-y-3" id="textarea">
+                    <div
+                      className="md:col-span-2 space-y-3 scroll-offset"
+                      id="textarea"
+                    >
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Textarea
                       </Text>
@@ -446,6 +449,14 @@ export default function ComponentsShowcase() {
                         placeholder="Enter description"
                         rows={4}
                         helperText="Maximum 200 characters"
+                        charLimit={200}
+                      />
+                      <Textarea
+                        label="Description"
+                        placeholder="Enter description"
+                        rows={4}
+                        minLength={100}
+                        helperText="Minimum 100 characters required"
                         charLimit={200}
                       />
                     </div>
@@ -465,7 +476,7 @@ export default function ComponentsShowcase() {
               </Card>
 
               {/* Selection Components */}
-              <Card id="selection">
+              <Card id="selection" className="scroll-offset">
                 <CardHeader>
                   <CardTitle>Selection Components</CardTitle>
                   <CardDescription>
@@ -473,7 +484,7 @@ export default function ComponentsShowcase() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="space-y-4" id="select">
+                  <div className="space-y-4 scroll-offset" id="select">
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Select
                     </Text>
@@ -498,7 +509,7 @@ export default function ComponentsShowcase() {
                     />
                   </div>
                   <Divider />
-                  <div className="space-y-4" id="select-search">
+                  <div className="space-y-4 scroll-offset" id="select-search">
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Select with search
                     </Text>
@@ -524,7 +535,7 @@ export default function ComponentsShowcase() {
                       data={searchSelectPropsData}
                     />
                     <Divider />
-                    <div id="switch" />
+                    <div id="switch" className="scroll-offset" />
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Switch / Toggle
                     </Text>
@@ -545,7 +556,7 @@ export default function ComponentsShowcase() {
                       columns={buttonProps}
                       data={switchPropsData}
                     />
-                    <div id="checkbox" />
+                    <div id="checkbox" className="scroll-offset" />
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Checkbox
                     </Text>
@@ -566,7 +577,7 @@ export default function ComponentsShowcase() {
                       columns={buttonProps}
                       data={checkboxPropsData}
                     />
-                    <div id="radio" />
+                    <div id="radio" className="scroll-offset" />
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Radio
                     </Text>
@@ -591,7 +602,7 @@ export default function ComponentsShowcase() {
                       columns={buttonProps}
                       data={radioPropsData}
                     />
-                    <div id="date" />
+                    <div id="date" className="scroll-offset" />
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Date Picker
                     </Text>
@@ -601,6 +612,7 @@ export default function ComponentsShowcase() {
                       onChange={setDate}
                       placeholder="Pick a date"
                     />
+
                     <PropsBlock
                       snippet={`import { Radio } from "@/components/ui/Radio";
 <DatePicker
@@ -612,7 +624,7 @@ export default function ComponentsShowcase() {
                       columns={buttonProps}
                       data={datePickerPropsData}
                     />
-                    <div id="time" />
+                    <div id="time" className="scroll-offset" />
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Time Picker
                     </Text>
@@ -627,7 +639,7 @@ export default function ComponentsShowcase() {
                       data={timePickerPropsData}
                     />
 
-                    <div id="slider" />
+                    <div id="slider" className="scroll-offset" />
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Slider
                     </Text>
@@ -694,7 +706,7 @@ export default function ComponentsShowcase() {
                       columns={buttonProps}
                       data={sliderPropsData}
                     />
-                    <div id="media-picker" />
+                    <div id="media-picker" className="scroll-offset" />
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Media Picker
                     </Text>
@@ -716,7 +728,7 @@ export default function ComponentsShowcase() {
                       data={mediaPickerPropsData}
                     />
 
-                    <div id="tag-select" />
+                    <div id="tag-select" className="scroll-offset" />
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Tag Select
                     </Text>
@@ -762,9 +774,9 @@ export default function ComponentsShowcase() {
                       columns={buttonProps}
                       data={tagSelectPropsData}
                     />
-                    <Divider/>
+                    <Divider />
                     <div>
-                      <div id="rich-text-editor" />
+                      <div id="rich-text-editor" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Rich Text Editor
                       </Text>
@@ -808,7 +820,7 @@ const [content, setContent] = useState("");
               </Card>
 
               {/* Display Components */}
-              <Card id="display">
+              <Card id="display" className="scroll-offset">
                 <CardHeader>
                   <CardTitle>Display Components</CardTitle>
                   <CardDescription>
@@ -818,7 +830,7 @@ const [content, setContent] = useState("");
                 <CardContent>
                   <div className="space-y-6">
                     <div>
-                      <div id="badges" />
+                      <div id="badges" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Badges
                       </Text>
@@ -842,7 +854,7 @@ const [content, setContent] = useState("");
                       data={badgePropsData}
                     />
                     <div>
-                      <div id="avatars" />
+                      <div id="avatars" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Avatars
                       </Text>
@@ -861,7 +873,7 @@ const [content, setContent] = useState("");
                       data={avatarPropsData}
                     />
                     <div>
-                      <div id="empty-state" />
+                      <div id="empty-state" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Empty State
                       </Text>
@@ -891,7 +903,7 @@ const [content, setContent] = useState("");
               </Card>
 
               {/* Feedback Components */}
-              <Card id="feedback">
+              <Card id="feedback" className="scroll-offset">
                 <CardHeader>
                   <CardTitle>Feedback Components</CardTitle>
                   <CardDescription>
@@ -901,7 +913,7 @@ const [content, setContent] = useState("");
                 <CardContent>
                   <div className="space-y-6">
                     <div>
-                      <div id="loaders" />
+                      <div id="loaders" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Loaders
                       </Text>
@@ -922,7 +934,7 @@ const [content, setContent] = useState("");
                       data={loaderPropsData}
                     />
                     <div>
-                      <div id="skeletons" />
+                      <div id="skeletons" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Skeletons
                       </Text>
@@ -950,7 +962,7 @@ const [content, setContent] = useState("");
                       data={skeletonHelpersData}
                     />
                     <div>
-                      <div id="progress-bars" />
+                      <div id="progress-bars" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Progress Bars
                       </Text>
@@ -968,7 +980,7 @@ const [content, setContent] = useState("");
                       data={progressPropsData}
                     />
                     <div>
-                      <div id="toasts" />
+                      <div id="toasts" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Toasts
                       </Text>
@@ -1008,7 +1020,7 @@ toast.info("Info message!")`}
                       data={[]}
                     />
                     <div>
-                      <div id="modal" />
+                      <div id="modal" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Modal
                       </Text>
@@ -1069,7 +1081,7 @@ toast.info("Info message!")`}
                       data={modalPropsData}
                     />
                     <div>
-                      <div id="tooltips" />
+                      <div id="tooltips" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Tooltips
                       </Text>
@@ -1097,7 +1109,7 @@ toast.info("Info message!")`}
                       data={tooltipPropsData}
                     />
                     <div>
-                      <div id="drawer" />
+                      <div id="drawer" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Drawer
                       </Text>
@@ -1160,7 +1172,7 @@ toast.info("Info message!")`}
                       data={drawerPropsData}
                     />
                     <div>
-                      <div id="stepper" />
+                      <div id="stepper" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Stepper
                       </Text>
@@ -1347,9 +1359,9 @@ const [activeStep, setActiveStep] = useState(0);
                       columns={buttonProps}
                       data={stepperPropsData}
                     />
-                    <Divider/>
+                    <Divider />
                     <div>
-                      <div id="ratings" />
+                      <div id="ratings" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Ratings
                       </Text>
@@ -1425,7 +1437,7 @@ const [rating, setRating] = useState(0);
               </Card>
 
               {/* Accordion */}
-              <Card id="accordion">
+              <Card id="accordion" className="scroll-offset">
                 <CardHeader>
                   <CardTitle>Accordion</CardTitle>
                   <CardDescription>Expandable content sections</CardDescription>
@@ -1442,7 +1454,7 @@ const [rating, setRating] = useState(0);
               </Card>
 
               {/* Navigation Components */}
-              <Card id="navigation">
+              <Card id="navigation" className="scroll-offset">
                 <CardHeader>
                   <CardTitle>Navigation Components</CardTitle>
                   <CardDescription>
@@ -1452,7 +1464,7 @@ const [rating, setRating] = useState(0);
                 <CardContent>
                   <div className="space-y-6">
                     <div>
-                      <div id="tabs" />
+                      <div id="tabs" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Tabs
                       </Text>
@@ -1466,7 +1478,7 @@ const [rating, setRating] = useState(0);
                     />
 
                     <div>
-                      <div id="breadcrumbs" />
+                      <div id="breadcrumbs" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Breadcrumbs
                       </Text>
@@ -1491,7 +1503,7 @@ const [rating, setRating] = useState(0);
                       data={breadcrumbsPropsData}
                     />
                     <div>
-                      <div id="dropdown" />
+                      <div id="dropdown" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Dropdown Menu
                       </Text>
@@ -1566,7 +1578,7 @@ const [rating, setRating] = useState(0);
               </Card>
 
               {/* Data Components */}
-              <Card id="data">
+              <Card id="data" className="scroll-offset">
                 <CardHeader>
                   <CardTitle>Data Components</CardTitle>
                   <CardDescription>
@@ -1576,7 +1588,7 @@ const [rating, setRating] = useState(0);
                 <CardContent>
                   <div className="space-y-6">
                     <div>
-                      <div id="searchInput" />
+                      <div id="searchInput" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Search Input
                       </Text>
@@ -1596,7 +1608,7 @@ const [rating, setRating] = useState(0);
                       data={searchInputPropsData}
                     />
                     <div>
-                      <div id="table" />
+                      <div id="table" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Table
                       </Text>
@@ -1620,7 +1632,7 @@ const [rating, setRating] = useState(0);
                       data={tablePropsData}
                     />
                     <div>
-                      <div id="pagination" />
+                      <div id="pagination" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Pagination
                       </Text>
@@ -1644,7 +1656,7 @@ const [rating, setRating] = useState(0);
                       columns={buttonProps}
                       data={paginationPropsData}
                     />
-                    <div id="infinite-loader" />
+                    <div id="infinite-loader" className="scroll-offset" />
                     <Divider />
                     <Text size={"lg"} weight={"semibold"} className="mb-3">
                       Infinite Loader
@@ -1689,7 +1701,7 @@ const [rating, setRating] = useState(0);
               </Card>
 
               {/* Typography */}
-              <Card id="typography">
+              <Card id="typography" className="scroll-offset">
                 <CardHeader>
                   <CardTitle>Typography</CardTitle>
                   <CardDescription>
@@ -1699,7 +1711,7 @@ const [rating, setRating] = useState(0);
                 <CardContent>
                   <div className="space-y-6">
                     <div>
-                      <div id="headings" />
+                      <div id="headings" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Headings
                       </Text>
@@ -1720,7 +1732,7 @@ const [rating, setRating] = useState(0);
                       data={headingPropsData}
                     />
                     <div>
-                      <div id="textVariants" />
+                      <div id="textVariants" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Text Variants
                       </Text>
@@ -1754,7 +1766,7 @@ const [rating, setRating] = useState(0);
                       data={textPropsData}
                     />
                     <div>
-                      <div id="flex" />
+                      <div id="flex" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Flex Layout
                       </Text>
@@ -1782,7 +1794,7 @@ const [rating, setRating] = useState(0);
                       data={flexPropsData}
                     />
                     <div>
-                      <div id="container" />
+                      <div id="container" className="scroll-offset" />
                       <Text size={"lg"} weight={"semibold"} className="mb-3">
                         Container
                       </Text>

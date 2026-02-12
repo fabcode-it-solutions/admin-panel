@@ -21,9 +21,12 @@ export function TimePicker({
   disabled,
 }: TimePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [openUpward, setOpenUpward] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Close on click outside
+  /* ---------------------------------------------
+     Close on outside click
+  ---------------------------------------------- */
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -37,9 +40,21 @@ export function TimePicker({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  /* ---------------------------------------------
+     Smart positioning (check every click)
+  ---------------------------------------------- */
+  const checkPosition = () => {
+    if (!containerRef.current) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const dropdownHeight = 260; // picker height
+    const spaceBelow = window.innerHeight - rect.bottom;
+
+    setOpenUpward(spaceBelow < dropdownHeight);
+  };
+
   const date = value || new Date();
 
-  // Get current values
   let hours = date.getHours();
   const minutes = date.getMinutes();
   const period = hours >= 12 ? "PM" : "AM";
@@ -48,7 +63,6 @@ export function TimePicker({
     hours = hours % 12 || 12;
   }
 
-  // Generators
   const hoursList = use12Hours
     ? Array.from({ length: 12 }, (_, i) => i + 1)
     : Array.from({ length: 24 }, (_, i) => i);
@@ -85,31 +99,40 @@ export function TimePicker({
     onChange?.(newDate);
   };
 
-  const formatTime = (d: Date) => {
-    return d.toLocaleTimeString([], {
+  const formatTime = (d: Date) =>
+    d.toLocaleTimeString([], {
       hour: "numeric",
       minute: "2-digit",
       hour12: use12Hours,
     });
-  };
 
   return (
     <div className={cn("relative inline-block", className)} ref={containerRef}>
       <Button
+        type="button"
         variant="outline"
         className={cn(
-          "w-45 justify-start text-left font-normal",
+          "w-[180px] justify-start text-left font-normal",
           !value && "text-muted-foreground",
         )}
-        onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
+        onClick={() => {
+          if (disabled) return;
+          checkPosition();
+          setIsOpen((prev) => !prev);
+        }}
       >
         <Clock className="mr-2 h-4 w-4" />
         {value ? formatTime(value) : "Pick a time"}
       </Button>
 
       {isOpen && (
-        <div className="absolute z-50 mt-2 flex h-64 w-auto min-w-50 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md">
+        <div
+          className={cn(
+            "absolute z-50 flex h-64 w-auto min-w-[200px] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md",
+            openUpward ? "bottom-full mb-2" : "top-full mt-2",
+          )}
+        >
           {/* Hours */}
           <div className="flex-1 overflow-y-auto border-r scrollbar-hide">
             <div className="p-1">
@@ -154,7 +177,7 @@ export function TimePicker({
             </div>
           </div>
 
-          {/* Period (Only for 12h) */}
+          {/* Period */}
           {use12Hours && (
             <div className="flex-1 overflow-y-auto scrollbar-hide">
               <div className="p-1">

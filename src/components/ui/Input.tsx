@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { forwardRef, InputHTMLAttributes, useState, memo } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React, { forwardRef, InputHTMLAttributes, useState, memo } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -17,7 +17,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
-      type = 'text',
+      type = "text",
       label,
       error,
       helperText,
@@ -28,21 +28,22 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       id,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [showPassword, setShowPassword] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
-    
+
     const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
-    const isPassword = type === 'password';
-    const inputType = isPassword && showPassword ? 'text' : type;
+    const isPassword = type === "password";
+    const inputType = isPassword && showPassword ? "text" : type;
 
     const togglePasswordVisibility = () => {
       setShowPassword((prev) => !prev);
     };
+    const hasError = !!error;
 
     return (
-      <div className={cn('relative', fullWidth && 'w-full')}>
+      <div className={cn("relative", fullWidth && "w-full")}>
         {label && (
           <label
             htmlFor={inputId}
@@ -66,12 +67,17 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             type={inputType}
             disabled={disabled}
             className={cn(
-              'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all',
-              leftIcon && 'pl-10',
-              (rightIcon || isPassword) && 'pr-10',
-              error && 'border-destructive focus-visible:ring-destructive',
-              isFocused && 'border-primary',
-              className
+              "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all",
+
+              leftIcon && "pl-10",
+              (rightIcon || isPassword) && "pr-10",
+              hasError
+                ? "border-destructive focus-visible:ring-destructive"
+                : isFocused
+                  ? "border-primary focus-visible:ring-ring"
+                  : "focus-visible:ring-ring",
+
+              className,
             )}
             onFocus={(e) => {
               setIsFocused(true);
@@ -109,8 +115,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         {(error || helperText) && (
           <p
             className={cn(
-              'mt-1.5 text-sm',
-              error ? 'text-destructive' : 'text-muted-foreground'
+              "mt-1.5 text-sm",
+              error ? "text-destructive" : "text-muted-foreground",
             )}
           >
             {error || helperText}
@@ -118,9 +124,9 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
-InputComponent.displayName = 'Input';
+InputComponent.displayName = "Input";
 
 export const Input = memo(InputComponent);
