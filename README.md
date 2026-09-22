@@ -1,49 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Base Admin Panel
+
+A production-ready **Next.js admin panel starter kit** — built with a modern, type-safe stack and a clean, scalable architecture. This boilerplate is used as the foundation for client admin dashboards, saving weeks of setup time on every new project.
+
+## Overview
+
+Base Admin Panel provides a fully working authentication flow, dashboard shell, and reusable UI component library out of the box — so development can start on business features from day one instead of re-building the same scaffolding for every project.
+
+## Key Features
+
+- **Authentication flow** — Login, Signup, Forgot Password, Reset Password, and Email Verification screens, ready to wire up to any backend
+- **Dashboard layout** — Pre-built responsive layout with navigation, ready for widgets, tables, and charts
+- **Reusable UI library** — Accessible, themeable components (dialogs, dropdowns, tabs, tooltips, switches, and more) built on Radix UI primitives
+- **Forms & validation** — React Hook Form + Zod for type-safe, validated forms
+- **State management** — Zustand for lightweight, scalable global state
+- **Data visualization** — Recharts integration for dashboard charts and analytics
+- **Code display** — Shiki-powered syntax highlighting
+- **Legal/policy pages** — Terms of Service page included
+- **Notifications** — Toast messaging via Sonner
+- **Animations** — Smooth UI transitions with Framer Motion
+
+## Tech Stack
+
+| Category | Technology |
+|---|---|
+| Framework | [Next.js 16](https://nextjs.org) (App Router) |
+| Language | TypeScript |
+| UI Library | React 19 |
+| Styling | Tailwind CSS 4 |
+| Components | Radix UI |
+| Forms | React Hook Form + Zod |
+| State | Zustand |
+| Charts | Recharts |
+| Icons | Lucide |
+
+## Project Structure
+
+```
+src/
+├── app/                # Next.js App Router pages
+│   ├── (auth)/         # Login, signup, password reset, email verification
+│   ├── (dashboard)/    # Main dashboard views
+│   └── (policies)/     # Terms & legal pages
+├── components/         # Reusable UI, layout, and page-level components
+├── config/             # App configuration
+├── hooks/              # Custom React hooks
+├── lib/                # Utilities and helpers
+├── providers/          # App-wide context providers
+├── services/           # API service layer
+├── store/              # Zustand stores
+└── types/              # Shared TypeScript types
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+# or
+yarn install
+```
+
+### Environment Setup
+
+Copy the example environment file and configure it for your environment:
+
+```bash
+cp .env.example .env
+```
+
+### Run the Development Server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the development server |
+| `npm run build` | Build the app for production |
+| `npm run start` | Start the production server |
+| `npm run lint` | Run ESLint |
 
-## Learn More
+## About This Project
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-# base-admin-panel
+This repository is maintained by **The Fabcode** as an internal starter template, adapted and extended for client projects requiring an admin dashboard. It reflects our approach to clean architecture, type safety, and reusable component design in production Next.js applications.
 
 ## License
 
 Copyright © 2026 The Fabcode. All Rights Reserved.
 
-This project is proprietary software. The source code is publicly available
-for viewing and reference purposes only. No permission is granted to copy,
-modify, distribute, or use this code without prior written permission from
-The Fabcode.
+This project is proprietary software. The source code is publicly available for viewing and reference purposes only. No permission is granted to copy, modify, distribute, or use this code without prior written permission from The Fabcode.
 
 See [LICENSE](./LICENSE) for the full license terms.
